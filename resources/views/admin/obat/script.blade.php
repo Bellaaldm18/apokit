@@ -79,7 +79,7 @@
             }).then((result) => {
                 if(result.isConfirmed) {
                     $.ajax({
-                        url: 'dashboard/manajemen-obat/' + id,
+                        url: 'manajemen-obat/' + id,
                         type: 'delete',
                         data: {
                             "_token": "{{ csrf_token() }}"
