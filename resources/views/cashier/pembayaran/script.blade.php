@@ -73,27 +73,55 @@
 
     }
 
-    $('.bayar').on('input', function() {
-        var inputHarga = $(this).val();
-        var cleanedInputHarga = inputHarga.replace(/[^\d,]/g, '').replace(',', '.');
-        var angka = parseFloat(cleanedInputHarga);
-        var formattedValue = formatRupiah(angka);
+    // $('.bayar').on('input', function() {
+    //     var inputHarga = $(this).val();
+    //     var cleanedInputHarga = inputHarga.replace(/[^\d,]/g, '').replace(',', '.');
+    //     var angka = parseFloat(cleanedInputHarga);
+    //     var formattedValue = formatRupiah(angka);
 
-        $(this).val(formattedValue);
+    //     $(this).val(formattedValue);
 
-        if (isNaN(angka) || angka < 0) {
-            $('.kembalian').text('Tidak Valid');
+    //     if (isNaN(angka) || angka < 0) {
+    //         $('.kembalian').text('Tidak Valid');
+    //     } else {
+    //         var totalPembayaran = parseCurrencyString($('.total-pembayaran').text());
+    //         var kembalian = angka - totalPembayaran;
+
+    //         if (kembalian < 0) {
+    //             $('.kembalian').text(formatRupiah(0));
+    //         } else {
+    //             $('.kembalian').text(formatRupiah(kembalian));
+    //         }
+    //     }
+    // })
+
+    $('.bayar').on('input', function () {
+    var inputHarga = $(this).val();
+    var cleanedInputHarga = inputHarga.replace(/[^\d,]/g, '').replace(',', '.');
+    var angka = parseFloat(cleanedInputHarga);
+    var formattedValue = formatRupiah(angka);
+
+    $(this).val(formattedValue);
+
+    var totalPembayaran = parseCurrencyString($('.total-pembayaran').text());
+    var kembalian = angka - totalPembayaran;
+
+    if (isNaN(angka) || angka < 0) {
+        $('.kembalian').text('Tidak Valid');
+        $('.bayar-hidden').val(0);
+        $('.kembalian-hidden').val(0);
+    } else {
+        $('.bayar-hidden').val(Math.floor(angka));
+        $('.kembalian-hidden').val(Math.max(0, Math.floor(kembalian)));
+
+        if (kembalian < 0) {
+            $('.kembalian').text(formatRupiah(0));
         } else {
-            var totalPembayaran = parseCurrencyString($('.total-pembayaran').text());
-            var kembalian = angka - totalPembayaran;
-
-            if (kembalian < 0) {
-                $('.kembalian').text(formatRupiah(0));
-            } else {
-                $('.kembalian').text(formatRupiah(kembalian));
-            }
+            $('.kembalian').text(formatRupiah(kembalian));
         }
-    })
+    }
+});
+
 
     $(document).ready(function() {
         getKeranjang()

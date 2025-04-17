@@ -77,7 +77,7 @@
             }).then((result) => {
                 if(result.isConfirmed) {
                     $.ajax({
-                        url: 'dashboard/user/' + id,
+                        url: '/dashboard/user/' + id,
                         type: 'delete',
                         data: {
                             "_token": "{{ csrf_token() }}"

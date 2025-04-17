@@ -92,8 +92,10 @@
                         @csrf
                         <input type="hidden" name="no_pesanan" value="{{ $no_pesanan }}">
                         <input type="hidden" class="form-control form-control-sm w-75 m-0 bayar-hidden" name="bayar">
+                        <input type="hidden" class="form-control form-control-sm w-75 m-0 bayar-hidden" name="bayar">
+                        <input type="hidden" class="form-control form-control-sm kembalian-hidden" name="kembalian">
                         <div class="d-flex flex-row-reverse">
-                            <a href="" class="btn btn-success ml-2">Cetak Struk</a>
+                            <a href="" class="btn btn-success ml-2" onclick="printReceipt()">Cetak Struk</a>
                             <button type="submit" class="btn btn-primary btn-bayar">Langsung Simpan</button>
                         </div>
                     </form>
@@ -104,4 +106,28 @@
 @endsection
 @section('script')
     @include('cashier.pembayaran.script')
+    <script>
+        function printReceipt() {
+            // Sembunyikan tombol cetak sebelum mencetak
+            var printButton = document.querySelector('.btn-success');
+            var saveButton = document.querySelector('.btn-primary');
+            if (printButton) {
+                printButton.style.display = 'none';
+            }
+            if (saveButton) {
+                saveButton.style.display = 'none';
+            }
+
+            // Panggil dialog cetak
+            window.print();
+
+            // Tampilkan kembali tombol cetak setelah mencetak
+            if (printButton) {
+                printButton.style.display = 'block';
+            }
+            if (saveButton) {
+                saveButton.style.display = 'block';
+            }
+        }
+    </script>
 @endsection

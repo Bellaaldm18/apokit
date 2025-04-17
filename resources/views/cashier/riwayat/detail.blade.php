@@ -73,6 +73,26 @@
                                 </td>
                                 <td class="text-lg text-success font-weight-bold total-pembayaran">{{ $data->total_pembayaran }}</td>
                             </tr>
+                            <tr>
+                                <td colspan="4"></td>
+                                <td>
+                                    <div class="d-flex justify-content-between">
+                                        <span>Bayar</span>
+                                        <span>:</span>
+                                    </div>
+                                </td>
+                                <td class="text-lg text-info font-weight-bold total-pembayaran">{{ $data->bayar }}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4"></td>
+                                <td>
+                                    <div class="d-flex justify-content-between">
+                                        <span>Kembalian</span>
+                                        <span>:</span>
+                                    </div>
+                                </td>
+                                <td class="text-lg text-danger font-weight-bold total-pembayaran">{{ $data->kembalian }}</td>
+                            </tr>
                         </tfoot>
                     </table>
                 </div>
@@ -98,7 +118,7 @@
     <script>
         function printReceipt() {
             // Sembunyikan tombol cetak sebelum mencetak
-            var printButton = document.querySelector('.btn-print');
+            var printButton = document.querySelector('.btn-success');
             if (printButton) {
                 printButton.style.display = 'none';
             }

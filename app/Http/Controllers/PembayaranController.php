@@ -34,44 +34,63 @@ class PembayaranController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $keranjang = session('keranjangBelanja', []);
-        // dd($keranjang);
+{
+    $keranjang = session('keranjangBelanja', []);
 
-        DB::beginTransaction();
-        try {
-            $transaksi = new Transaksi();
-            $transaksi->no_transaksi = $request->no_pesanan;
-            $transaksi->tgl_transaksi = now()->format('Y-m-d');
-            $transaksi->waktu_transaksi = now()->toTimeString(); // Tambahkan waktu transaksi sesuai dengan saat ini
-            $transaksi->total_pembayaran = $request->bayar; // Isi dengan total pembayaran jika Anda memiliki perhitungan total
-            $transaksi->save();
-
-            // Simpan juga detail transaksi jika ada
-            foreach ($keranjang as $item) {
-                $detailTransaksi = new DetailTransaksi();
-                $detailTransaksi->transaksi_id = $transaksi->id;
-                $detailTransaksi->obat_id = $item['id'];
-                $detailTransaksi->kuantitas = $item['kuantitas'];
-                $detailTransaksi->total_harga = $item['harga'] * $item['kuantitas'];
-                $detailTransaksi->save();
-
-                $obat = ManajemenObat::find($item['id']);
-                if($obat) {
-                    $obat->stok -= $item['kuantitas'];
-                    $obat->save();
-                }
-            }
-
-            DB::commit();
-            session()->forget('keranjangBelanja');
-            return redirect()->to('pesanan');
-        } catch(\Exception $e) {
-            DB::rollBack();
-            dd($e->getMessage());
-            return redirect()->back()->with('error', 'Terjadi kesalahan saat menyimpan transaksi: ' . $e->getMessage());
+    DB::beginTransaction();
+    try {
+        // Hitung total dari keranjang
+        $totalPembayaran = 0;
+        foreach ($keranjang as $item) {
+            $totalPembayaran += $item['harga'] * $item['kuantitas'];
         }
+
+        $bayar = (int) $request->bayar;
+        $kembalian = (int) $request->kembalian;
+
+        // Simpan transaksi utama
+        $transaksi = new Transaksi();
+        $transaksi->no_transaksi = $request->no_pesanan;
+        $transaksi->tgl_transaksi = now()->format('Y-m-d');
+        $transaksi->waktu_transaksi = now()->toTimeString();
+        $transaksi->total_pembayaran = $totalPembayaran;
+        $transaksi->bayar = $bayar;
+        $transaksi->kembalian = $kembalian;
+        $transaksi->save();
+
+        // Simpan detail transaksi
+        foreach ($keranjang as $item) {
+            $subtotal = $item['harga'] * $item['kuantitas'];
+            $porsi = $subtotal / $totalPembayaran;
+
+            $detailTransaksi = new DetailTransaksi();
+            $detailTransaksi->transaksi_id = $transaksi->id;
+            $detailTransaksi->obat_id = $item['id'];
+            $detailTransaksi->kuantitas = $item['kuantitas'];
+            $detailTransaksi->total_harga = $subtotal;
+            $detailTransaksi->bayar = floor($bayar * $porsi);
+            $detailTransaksi->kembalian = floor($kembalian * $porsi);
+            $detailTransaksi->save();
+
+            // Kurangi stok obat
+            $obat = ManajemenObat::find($item['id']);
+            if ($obat) {
+                $obat->stok -= $item['kuantitas'];
+                $obat->save();
+            }
+        }
+
+        DB::commit();
+        session()->forget('keranjangBelanja');
+        return redirect()->to('pesanan');
+
+    } catch (\Exception $e) {
+        DB::rollBack();
+        dd($e->getMessage());
+        return redirect()->back()->with('error', 'Terjadi kesalahan saat menyimpan transaksi: ' . $e->getMessage());
     }
+}
+
 
     /**
      * Display the specified resource.

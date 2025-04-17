@@ -43,8 +43,16 @@
             <li class="nav-item font-weight-bold">
                 <a href="{{ url('riwayat') }}" class="nav-link text-white">Riwayat</a>
             </li>
+            <li class="nav-item font-weight-bold">
+                <div class="nav-link">
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                    <button class="text-white bg-transparent border-0 fw-bold">Logout</button>
+                </form>
+                </div>
+            </li>
             <li class="nav-item dropdown no-arrow">
-                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                {{-- <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="mr-2 d-none d-lg-inline text-white">Douglas McGee</span>
                 </a>
@@ -61,7 +69,7 @@
                             Logout
                         </button>
                     </form>
-                </div>
+                </div> --}}
             </li>
         </ul>
     </nav>
