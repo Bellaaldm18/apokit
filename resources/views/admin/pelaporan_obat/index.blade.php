@@ -8,6 +8,14 @@
 {{--  <div class="container bg-white mx-3 mb-4 p-4 rounded card shadow">  --}}
     <div class="mx-3 card shadow mb-4">
         <div class="card-body">
+        <div style="height: 300px;" class="d-flex justify-content-center">
+            <canvas id="chartObatTerlaris"></canvas>
+        </div>
+        </div>
+    </div>
+
+    <div class="mx-3 card shadow mb-4">
+        <div class="card-body">
             <div class="table-responsive">
                 <div class="row">
                     <div class="col-auto">
@@ -47,9 +55,11 @@
                 <table class="table" id="tabel-kadaluarsa" width="100%" cellspacing="0">
                     <thead class="text-center">
                         <tr>
+                            <th class="align-middle">No</th>
                             <th class="align-middle">Nama Obat</th>
                             <th class="align-middle">Nomor Batch</th>
                             <th class="align-middle">Tanggal Kadaluarsa</th>
+                            <th class="align-middle">Sisa Hari</th>
                             <th class="align-middle">Stok Saat Ini</th>
                         </tr>
                     </thead>

@@ -74,12 +74,14 @@ Route::middleware(['auth','admin'])->group(function() {
             Route::get('laporan-keuangan', 'index');
             Route::get('load-laporan-bulan', 'monthlyTransaction');
             Route::get('export-laporan-bulanan', 'exportMonthly');
+            Route::get('total-pendapatan-bulan', 'totalPendapatanBulan');
         });
 
         Route::controller(LaporanObatController::class)->group(function() {
             Route::get('laporan-obat', 'index');
             Route::get('obat-kadaluarsa', 'cariKadaluarsa');
             Route::get('obat-terlaris', 'obatTerlaris');
+            Route::get('grafik-obat-terlaris', 'grafikObatTerlaris');
             Route::get('export-laporan-obat-kadaluarsa', 'exportExpired');
             Route::get('export-laporan-obat-terlaris', 'exportBestSelling');
         });

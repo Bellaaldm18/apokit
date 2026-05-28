@@ -9,7 +9,7 @@
         ajax: {
             url: "{{ url('dashboard/load-laporan-bulan') }}",
             data: function (d) {
-                d.bulan = String(dropdownBulan.val()); // Mengambil nilai bulan dari dropdown
+                d.bulan = String(dropdownBulan.val());
             }
         },
         columns: [
@@ -18,7 +18,6 @@
                 name: 'Nomor',
                 className: 'text-center align-center',
                 render: function (data, type, row, meta) {
-                    // Menggunakan data.id untuk nomor increment
                     return meta.row + 1;
                 }
             },
@@ -46,6 +45,7 @@
         ]
     })
 
+
     $(document).ready(function() {
         $('body').on('click', '.export', function(e){
             e.preventDefault()
@@ -55,10 +55,12 @@
         })
     })
 
+
     var dropdownBulan = $('#bulan')
 
     var bulan = [
-        'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+        'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+        'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
     ];
 
     for (var i = 0; i < bulan.length; i++) {
@@ -69,10 +71,37 @@
     }
 
 
+    var bulanSekarang = new Date().getMonth() + 1;
+    bulanSekarang = bulanSekarang.toString().padStart(2, '0');
+
+    dropdownBulan.val(bulanSekarang).trigger('change');
+
+
+    // ==============================
+    // TAMBAHAN: LOAD TOTAL PENDAPATAN
+    // ==============================
+    function loadTotalPendapatan(bulan) {
+        $.ajax({
+            url: "{{ url('dashboard/total-pendapatan-bulan') }}",
+            type: "GET",
+            data: { bulan: bulan },
+            success: function(res) {
+                $('#total-pendapatan').text(formatRupiah(res.total));
+            }
+        });
+    }
+
+
     dropdownBulan.on('change', function() {
         console.log(dropdownBulan.val())
         table.ajax.reload()
+
+        // ==============================
+        // TAMBAHAN: UPDATE TOTAL
+        // ==============================
+        loadTotalPendapatan(dropdownBulan.val());
     })
+
 
     function formatDateToIndonesian(dateStr) {
         const months = [
@@ -87,8 +116,9 @@
             const day = parts[2]
             return day + " " + months[month] + " " + year
         }
-        return dateStr // Return the original date if the format is invalid
+        return dateStr
     }
+
 
     function formatRupiah(number) {
         return new Intl.NumberFormat('id-ID', {
@@ -98,5 +128,4 @@
             maximumFractionDigits: 2
         }).format(number)
     }
-
 </script>

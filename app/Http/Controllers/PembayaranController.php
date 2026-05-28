@@ -68,8 +68,8 @@ class PembayaranController extends Controller
             $detailTransaksi->obat_id = $item['id'];
             $detailTransaksi->kuantitas = $item['kuantitas'];
             $detailTransaksi->total_harga = $subtotal;
-            $detailTransaksi->bayar = floor($bayar * $porsi);
-            $detailTransaksi->kembalian = floor($kembalian * $porsi);
+            // $detailTransaksi->bayar = floor($bayar * $porsi);
+            // $detailTransaksi->kembalian = floor($kembalian * $porsi);
             $detailTransaksi->save();
 
             // Kurangi stok obat

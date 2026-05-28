@@ -3,8 +3,9 @@
 namespace App\Exports;
 
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class BestSellingMedicineExport implements FromCollection
+class BestSellingMedicineExport implements FromCollection, WithHeadings
 {
     protected $obat;
 
@@ -20,8 +21,8 @@ class BestSellingMedicineExport implements FromCollection
     {
         return collect($this->obat)->map(function($obat, $index) {
             return [
-                '#' => $index+1,
-                'Nama Obat' => $obat['nama'],
+                '#' => $index + 1,
+                'Nama Obat' => $obat['nama_obat'],
                 'Nomor Batch' => $obat['no_batch'],
                 'Total Penjualan' => $obat['total_penjualan'],
                 'Stok Saat Ini' => $obat['stok']

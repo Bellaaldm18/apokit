@@ -1,13 +1,21 @@
 <script>
     var table = $('#tabel-kadaluarsa').DataTable({
         scrollX: true,
-        "language": {
-            "url": "https://cdn.datatables.net/plug-ins/1.10.24/i18n/Indonesian.json"
+        language: {
+            url: "https://cdn.datatables.net/plug-ins/1.10.24/i18n/Indonesian.json"
         },
         processing: false,
         serverSide: false,
         ajax: "{{ url('dashboard/obat-kadaluarsa') }}",
         columns: [
+            {
+                data: null,
+                name: 'Nomor',
+                className: 'text-center align-center',
+                render: function (data, type, row, meta) {
+                    return meta.row + 1;
+                }
+            },
             {
                 data: 'nama',
                 name: 'Nama Obat',
@@ -22,8 +30,33 @@
                 data: 'tgl_kadaluarsa',
                 name: 'Tanggal Kadaluarsa',
                 className: 'text-center',
-                render: function(data, type, row) {
+                render: function(data) {
                     return formatDateToIndonesian(data)
+                }
+            },
+            {
+                data: 'tgl_kadaluarsa',
+                name: 'Sisa Hari',
+                className: 'text-center',
+                render: function(data) {
+
+                    const today = new Date()
+                    const expiredDate = new Date(data)
+
+                    // reset jam agar hitungan hari akurat
+                    today.setHours(0,0,0,0)
+                    expiredDate.setHours(0,0,0,0)
+
+                    const diffTime = expiredDate - today
+                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+
+                    if (diffDays < 0) {
+                        return `<span class="badge bg-danger text-white">Sudah Kadaluarsa</span>`
+                    } else if (diffDays === 0) {
+                        return `<span class="badge bg-warning text-white">Hari Ini</span>`
+                    } else {
+                        return `<span class="badge bg-info text-white">${diffDays} Hari Lagi</span>`
+                    }
                 }
             },
             {
@@ -33,9 +66,8 @@
             },
         ],
         order: [
-            [2, 'asc']
+            [3, 'asc']
         ]
-
     })
 
     var table = $('#tabel-obat').DataTable({
@@ -96,4 +128,26 @@
         return dateStr // Return the original date if the format is invalid
     }
 
+    $.ajax({
+    url: "{{ url('dashboard/grafik-obat-terlaris') }}",
+    type: "GET",
+    success: function (res) {
+
+        const labels = res.map(item => item.nama_obat)
+        const data = res.map(item => item.total)
+
+        new Chart(document.getElementById('chartObatTerlaris'), {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Obat Terlaris (30 Hari)',
+                    data: data,
+                    backgroundColor: '#1cc88a'
+                }]
+            }
+        })
+
+    }
+})
 </script>

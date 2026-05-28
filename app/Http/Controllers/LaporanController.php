@@ -89,4 +89,16 @@ class LaporanController extends Controller
 
         return $daftarBulan[$bulan];
     }
+
+    public function totalPendapatanBulan(Request $request)
+    {
+        $bulan = $request->bulan;
+
+        $total = Transaksi::whereMonth('tgl_transaksi', $bulan)
+            ->sum('total_pembayaran');
+
+        return response()->json([
+            'total' => $total
+        ]);
+    }
 }

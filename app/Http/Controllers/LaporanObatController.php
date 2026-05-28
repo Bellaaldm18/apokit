@@ -61,4 +61,20 @@ class LaporanObatController extends Controller
         $fileName = 'laporan_obat_terlaris.xlsx';
         return Excel::download($export, $fileName);
     }
+
+    public function grafikObatTerlaris()
+{
+    $data = DetailTransaksi::join('manajemen_obats', 'detail_transaksis.obat_id', '=', 'manajemen_obats.id')
+        ->select(
+            'manajemen_obats.nama as nama_obat',
+            DB::raw('SUM(detail_transaksis.kuantitas) as total')
+        )
+        ->whereDate('detail_transaksis.created_at', '>=', now()->subDays(30))
+        ->groupBy('manajemen_obats.nama')
+        ->orderBy('total', 'desc')
+        ->limit(10)
+        ->get();
+
+    return response()->json($data);
+}
 }
