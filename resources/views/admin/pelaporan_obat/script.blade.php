@@ -39,14 +39,10 @@
                 name: 'Sisa Hari',
                 className: 'text-center',
                 render: function(data) {
-
                     const today = new Date()
                     const expiredDate = new Date(data)
-
-                    // reset jam agar hitungan hari akurat
                     today.setHours(0,0,0,0)
                     expiredDate.setHours(0,0,0,0)
-
                     const diffTime = expiredDate - today
                     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
 
@@ -70,7 +66,7 @@
         ]
     })
 
-    var table = $('#tabel-obat').DataTable({
+    var table2 = $('#tabel-obat').DataTable({
         scrollX: true,
         "language": {
             "url": "https://cdn.datatables.net/plug-ins/1.10.24/i18n/Indonesian.json"
@@ -84,7 +80,6 @@
                 name: 'Nomor',
                 className: 'text-center align-center',
                 render: function (data, type, row, meta) {
-                    // Menggunakan data.id untuk nomor increment
                     return meta.row + 1;
                 }
             },
@@ -117,7 +112,6 @@
             "Januari", "Februari", "Maret", "April", "Mei", "Juni",
             "Juli", "Agustus", "September", "Oktober", "November", "Desember"
         ]
-
         const parts = dateStr.split("-")
         if (parts.length === 3) {
             const year = parts[0]
@@ -125,29 +119,68 @@
             const day = parts[2]
             return day + " " + months[month] + " " + year
         }
-        return dateStr // Return the original date if the format is invalid
+        return dateStr
     }
 
     $.ajax({
-    url: "{{ url('dashboard/grafik-obat-terlaris') }}",
-    type: "GET",
-    success: function (res) {
+        url: "{{ url('dashboard/grafik-obat-terlaris') }}",
+        type: "GET",
+        success: function (res) {
+            // Label singkat (nomor urut + nama terpotong) untuk grafik
+            const labels = res.map(function(item, index) {
+                var nama = item.nama_obat;
+                var short = nama.length > 12 ? nama.substring(0, 12) + '…' : nama;
+                return '#' + (index + 1) + ' ' + short;
+            });
 
-        const labels = res.map(item => item.nama_obat)
-        const data = res.map(item => item.total)
+            const fullLabels = res.map(function(item) { return item.nama_obat; });
+            const data = res.map(function(item) { return item.total; });
 
-        new Chart(document.getElementById('chartObatTerlaris'), {
-            type: 'bar',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'Obat Terlaris (30 Hari)',
-                    data: data,
-                    backgroundColor: '#1cc88a'
-                }]
-            }
-        })
+            // Top 10 = merah, rank 11-20 = kuning
+            const colors = data.map(function(_, index) {
+                return index < 10 ? '#e74a3b' : '#f6c23e';
+            });
 
-    }
-})
+            new Chart(document.getElementById('chartObatTerlaris'), {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Jumlah Terjual',
+                        data: data,
+                        backgroundColor: colors
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                title: function(tooltipItems) {
+                                    return fullLabels[tooltipItems[0].dataIndex];
+                                },
+                                label: function(tooltipItem) {
+                                    return 'Terjual: ' + tooltipItem.raw + ' unit';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Buat tabel legenda nama lengkap
+            var legendHtml = '<p class="font-weight-bold mb-2">Keterangan Nama Lengkap:</p>';
+            legendHtml += '<div class="row">';
+            res.forEach(function(item, index) {
+                var badgeColor = index < 10 ? '#e74a3b' : '#f6c23e';
+                legendHtml += '<div class="col-md-6 col-lg-4 mb-1">';
+                legendHtml += '<span style="color:' + badgeColor + '; font-weight:bold;">#' + (index + 1) + '</span> ';
+                legendHtml += '<small>' + item.nama_obat + '</small>';
+                legendHtml += '</div>';
+            });
+            legendHtml += '</div>';
+            $('#legend-obat-terlaris').html(legendHtml);
+        }
+    })
 </script>

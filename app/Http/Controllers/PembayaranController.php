@@ -19,7 +19,8 @@ class PembayaranController extends Controller
     {
         $keranjang = session('keranjangBelanja', []);
         $no_pesanan = $this->generateOrder();
-        return view('cashier.pembayaran.index', compact('keranjang', 'no_pesanan'));
+        $kasir = auth()->user();
+        return view('cashier.pembayaran.index', compact('keranjang', 'no_pesanan', 'kasir'));
     }
 
     /**
@@ -56,6 +57,8 @@ class PembayaranController extends Controller
         $transaksi->total_pembayaran = $totalPembayaran;
         $transaksi->bayar = $bayar;
         $transaksi->kembalian = $kembalian;
+        $transaksi->metode_pembayaran = $request->metode_pembayaran ?? 'cash';
+        $transaksi->kasir_id = auth()->id();
         $transaksi->save();
 
         // Simpan detail transaksi

@@ -19,6 +19,8 @@ class ManajemenObat extends Model
         'tgl_penerimaan',
         'harga_beli',
         'harga_jual',
-        'catatan'
+        'catatan',
+        'is_obat_keras',
+        'komposisi'
     ];
 }

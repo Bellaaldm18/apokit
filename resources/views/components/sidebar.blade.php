@@ -16,18 +16,16 @@
     <li class="nav-item active">
         <a class="nav-link" href="{{ url('/dashboard') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span></a>
+            <span>Dashboard</span>
+        </a>
     </li>
 
     <!-- Divider -->
     <hr class="sidebar-divider">
 
     <!-- Heading -->
-    <div class="sidebar-heading">
-        Data Master
-    </div>
+    <div class="sidebar-heading">Data Master</div>
 
-    <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="{{ url('dashboard/manajemen-obat') }}">
             <i class="fa-solid fa-capsules"></i>
@@ -43,10 +41,21 @@
     <hr class="sidebar-divider">
 
     <!-- Heading -->
-    <div class="sidebar-heading">
-        Pelaporan
-    </div>
-    <!-- Nav Item - Pages Collapse Menu -->
+    <div class="sidebar-heading">Monitoring</div>
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ url('dashboard/monitoring') }}">
+            <i class="fa-solid fa-chart-line"></i>
+            <span>Stok & Kadaluarsa</span>
+        </a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">Pelaporan</div>
+
     <li class="nav-item">
         <a class="nav-link collapsed" href="{{ url('dashboard/laporan-obat') }}">
             <i class="fa-solid fa-clipboard"></i>
@@ -57,8 +66,6 @@
             <span>Laporan Keuangan</span>
         </a>
     </li>
-
-
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
