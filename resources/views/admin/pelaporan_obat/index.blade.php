@@ -8,10 +8,7 @@
     <div class="mx-3 card shadow mb-4">
         <div class="card-body">
             <h5 class="fw-bolder mb-3">Grafik Obat Terlaris (30 Hari Terakhir)</h5>
-            <div class="d-flex mb-2">
-                <span class="badge mr-2" style="background:#e74a3b; padding:6px 12px;">&#9632; Top 10 (Merah)</span>
-                <span class="badge" style="background:#f6c23e; padding:6px 12px;">&#9632; Rank 11–20 (Kuning)</span>
-            </div>
+
             <div style="height: 350px;" class="d-flex justify-content-center">
                 <canvas id="chartObatTerlaris"></canvas>
             </div>
