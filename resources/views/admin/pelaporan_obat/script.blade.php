@@ -129,17 +129,32 @@
             // Label singkat (nomor urut + nama terpotong) untuk grafik
             const labels = res.map(function(item, index) {
                 var nama = item.nama_obat;
-                var short = nama.length > 12 ? nama.substring(0, 12) + '…' : nama;
+                var short = nama.split(' ')[0];
                 return '#' + (index + 1) + ' ' + short;
             });
 
             const fullLabels = res.map(function(item) { return item.nama_obat; });
-            const data = res.map(function(item) { return item.total; });
+            const data = res.map(function(item) { return Number(item.total); });
 
-            // Top 10 = merah, rank 11-20 = kuning
-            const colors = data.map(function(_, index) {
-                return index < 10 ? '#e74a3b' : '#f6c23e';
-            });
+            // Hitung quintile dari data yang diurutkan naik
+            var sorted = data.slice().sort(function(a, b) { return a - b; });
+            var n = sorted.length;
+            var q = [
+                sorted[Math.floor(n * 0.2)] ?? sorted[n - 1],
+                sorted[Math.floor(n * 0.4)] ?? sorted[n - 1],
+                sorted[Math.floor(n * 0.6)] ?? sorted[n - 1],
+                sorted[Math.floor(n * 0.8)] ?? sorted[n - 1],
+            ];
+
+            function getColor(value) {
+                if (value <= q[0]) return '#f6c23e'; // kuning  - 20% terbawah
+                if (value <= q[1]) return '#fd7e14'; // oranye  - 20-40%
+                if (value <= q[2]) return '#e74a3b'; // merah   - 40-60%
+                if (value <= q[3]) return '#4e73df'; // biru    - 60-80%
+                return '#1cc88a';                     // hijau   - 20% teratas
+            }
+
+            const colors = data.map(function(val) { return getColor(val); });
 
             new Chart(document.getElementById('chartObatTerlaris'), {
                 type: 'bar',
@@ -169,18 +184,36 @@
                 }
             });
 
-            // Buat tabel legenda nama lengkap
-            var legendHtml = '<p class="font-weight-bold mb-2">Keterangan Nama Lengkap:</p>';
-            legendHtml += '<div class="row">';
-            res.forEach(function(item, index) {
-                var badgeColor = index < 10 ? '#e74a3b' : '#f6c23e';
-                legendHtml += '<div class="col-md-6 col-lg-4 mb-1">';
-                legendHtml += '<span style="color:' + badgeColor + '; font-weight:bold;">#' + (index + 1) + '</span> ';
-                legendHtml += '<small>' + item.nama_obat + '</small>';
-                legendHtml += '</div>';
+            // Keterangan warna kuintil dengan range aktual
+            var colorLegend = [
+                { color: '#f6c23e', label: 'Terendah (0%–20%)' },
+                { color: '#fd7e14', label: 'Rendah (20%–40%)' },
+                { color: '#e74a3b', label: 'Sedang (40%–60%)' },
+                { color: '#4e73df', label: 'Tinggi (60%–80%)' },
+                { color: '#1cc88a', label: 'Terlaris (80%–100%)' },
+            ];
+            var colorLegendHtml = '<div class="d-flex flex-wrap mb-3">';
+            colorLegend.forEach(function(c) {
+                colorLegendHtml += '<span class="mr-3 mb-1">'
+                    + '<span style="display:inline-block;width:12px;height:12px;background:' + c.color + ';border-radius:2px;margin-right:4px;vertical-align:middle;"></span>'
+                    + '<small>' + c.label + '</small>'
+                    + '</span>';
             });
-            legendHtml += '</div>';
-            $('#legend-obat-terlaris').html(legendHtml);
+            colorLegendHtml += '</div>';
+
+            // // Tabel legenda nama lengkap
+            // var legendHtml = colorLegendHtml;
+            // legendHtml += '<p class="font-weight-bold mb-2">Keterangan Nama Lengkap:</p>';
+            // legendHtml += '<div class="row">';
+            // res.forEach(function(item, index) {
+            //     var badgeColor = getColor(item.total);
+            //     legendHtml += '<div class="col-md-6 col-lg-4 mb-1">';
+            //     legendHtml += '<span style="color:' + badgeColor + '; font-weight:bold;">#' + (index + 1) + '</span> ';
+            //     legendHtml += '<small>' + item.nama_obat + ' <span class="text-muted">(' + item.total + ' unit)</span></small>';
+            //     legendHtml += '</div>';
+            // });
+            // legendHtml += '</div>';
+            $('#legend-obat-terlaris').html(colorLegendHtml);
         }
     })
 </script>
