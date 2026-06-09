@@ -3,6 +3,6 @@
         Edit
     </a>
     <a data-id="{{ $data->id }}" title="Delete Data" class="btn btn-sm btn-icon btn-danger btn-delete">
-        Delete
+        Hapus
     </a>
 </div>

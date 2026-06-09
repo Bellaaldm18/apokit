@@ -21,7 +21,7 @@ class MonthlyTransactionExport implements FromCollection, WithHeadings
     {
         return collect($this->transaksi)->map(function($transaksi, $index) {
             return [
-                '#' => $index+1,
+                'No' => $index+1,
                 'Nomor Transaksi' => $transaksi['no_transaksi'],
                 'Tanggal Transaksi' => $transaksi['tgl_transaksi'],
                 'Total Transaksi' => $transaksi['total_pembayaran']

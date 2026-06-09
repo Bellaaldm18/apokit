@@ -1,6 +1,6 @@
 <script>
     var table = $('#tabel-kadaluarsa').DataTable({
-        scrollX: true,
+        ordering: false,
         language: {
             url: "https://cdn.datatables.net/plug-ins/1.10.24/i18n/Indonesian.json"
         },
@@ -71,7 +71,7 @@
     })
 
     var table = $('#tabel-obat').DataTable({
-        scrollX: true,
+        ordering: false,
         "language": {
             "url": "https://cdn.datatables.net/plug-ins/1.10.24/i18n/Indonesian.json"
         },

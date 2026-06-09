@@ -13,14 +13,14 @@
                 <table class="table" id="tabel-obat" width="100%" cellspacing="0">
                     <thead class="text-center">
                         <tr>
-                            <th class="align-middle">No</th>
-                            <th class="align-middle">Nama Obat</th>
-                            <th class="align-middle">Nomor Batch</th>
-                            <th class="align-middle">Tanggal Kadaluarsa</th>
-                            <th class="align-middle">Stok</th>
-                            <th class="align-middle">Harga Beli</th>
-                            <th class="align-middle">Harga Jual</th>
-                            <th class="align-middle">Aksi</th>
+                            <th class=>No</th>
+                            <th class=>Nama Obat</th>
+                            <th class=>Nomor Batch</th>
+                            <th class=>Tanggal Kadaluarsa</th>
+                            <th class=>Stok</th>
+                            <th class=>Harga Beli</th>
+                            <th class=>Harga Jual</th>
+                            <th class=>Aksi</th>
                         </tr>
                     </thead>
                 </table>

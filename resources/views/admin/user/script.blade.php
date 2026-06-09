@@ -7,6 +7,7 @@
 
     var table = $('#tabel-user').DataTable({
         scrollX: true,
+        ordering: false,
         "language": {
             "url": "https://cdn.datatables.net/plug-ins/1.10.24/i18n/Indonesian.json"
         },
@@ -68,12 +69,11 @@
             e.preventDefault();
             var id = $(this).data('id');
             swalInit.fire({
-                title: 'Yakin data akan dihapus?',
-                text: 'Data yang dihapus tidak dapat dikembalikan!',
-                icon: 'warning',
+                text: 'Apakah data ini akan dihapus?',
+                icon: 'question',
                 showCancelButton: true,
                 cancelButtonText: 'Batal',
-                confirmButtonText: 'Ya, Hapus!',
+                confirmButtonText: 'Hapus',
             }).then((result) => {
                 if(result.isConfirmed) {
                     $.ajax({
@@ -110,18 +110,18 @@
             var msg = '';
             var msgTitle = '';
             if (status == '0') {
-                msgTitle = 'Aktivasi User';
-                msg = 'Data user akan diaktifkan ?';
+
+                msg = 'Data user akan diaktifkan?';
             } else if (status == '1') {
-                msgTitle = 'Aktivasi User';
-                msg = 'Data user akan dinonaktifkan ?';
+
+                msg = 'Data user akan dinonaktifkan?';
             }
             swalInit.fire({
                 title: msgTitle,
                 text: msg,
-                icon: 'warning',
+                icon: 'question',
                 showCancelButton: true,
-                confirmButtonText: 'Ya!',
+                confirmButtonText: 'Ya',
                 cancelButtonText: 'Batal',
                 reverseButtons: true
             }).then((result) => {

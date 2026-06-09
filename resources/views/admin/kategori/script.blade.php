@@ -1,6 +1,7 @@
 <script>
     var table = $('#tabel-obat').DataTable({
         scrollX: true,
+        ordering: false,
         "language": {
             "url": "https://cdn.datatables.net/plug-ins/1.10.24/i18n/Indonesian.json"
         },
@@ -66,12 +67,11 @@
             e.preventDefault();
             var id = $(this).data('id');
             swalInit.fire({
-                title: 'Yakin data akan dihapus?',
-                text: 'Data yang dihapus tidak dapat dikembalikan!',
-                icon: 'warning',
+                text: 'Apakah data ini akan dihapus?',
+                icon: 'question',
                 showCancelButton: true,
                 cancelButtonText: 'Batal',
-                confirmButtonText: 'Ya, Hapus!',
+                confirmButtonText: 'Hapus',
             }).then((result) => {
                 if(result.isConfirmed) {
                     $.ajax({

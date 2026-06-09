@@ -16,13 +16,13 @@
 
     <div class="mx-3 card shadow mb-4">
         <div class="card-body">
-            <div class="table-responsive">
+            <div>
                 <div class="row">
                     <div class="col-auto">
                         <h5 class="mb-4 fw-bolder">Barang yang sering keluar</h5>
                     </div>
                     <div class="ml-auto mr-3">
-                        <a href="{{ url('dashboard/export-laporan-obat-terlaris') }}" type="button" class="btn btn-success mb-4 export">Export Data</a>
+                        <a href="{{ url('dashboard/export-laporan-obat-terlaris') }}" type="button" class="btn btn-success mb-4 export">Export</a>
                     </div>
                 </div>
                 <table class="table" id="tabel-obat" width="100%" cellspacing="0">
@@ -43,13 +43,13 @@
 
     <div class="mx-3 card shadow mb-4">
         <div class="card-body">
-            <div class="table-responsive">
+            <div>
                 <div class="row">
                     <div class="col-auto">
                         <h5 class="mb-4 fw-bolder">Barang yang mendekati tanggal kadaluarsa</h5>
                     </div>
                     <div class="ml-auto mr-3">
-                        <a href="{{ url('dashboard/export-laporan-obat-kadaluarsa') }}" type="button" class="btn btn-success mb-4 export">Export Data</a>
+                        <a href="{{ url('dashboard/export-laporan-obat-kadaluarsa') }}" type="button" class="btn btn-success mb-4 export">Export</a>
                     </div>
                 </div>
                 <table class="table" id="tabel-kadaluarsa" width="100%" cellspacing="0">

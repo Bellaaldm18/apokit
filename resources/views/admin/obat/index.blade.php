@@ -13,7 +13,7 @@
                 <table class="table" id="tabel-obat" width="100%" cellspacing="0">
                     <thead class="text-center">
                         <tr>
-                            <th class="align-middle">No</th>
+                            <th class>No</th>
                             <th class="align-middle">Nama Obat</th>
                             <th class="align-middle">Nomor Batch</th>
                             <th class="align-middle">Tanggal Kadaluarsa</th>

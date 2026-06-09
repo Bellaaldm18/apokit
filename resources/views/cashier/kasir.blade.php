@@ -36,7 +36,7 @@
                             <table class="table table-borderless" id="tabel-keranjang">
                                 <thead id="th-keranjang">
                                     <tr>
-                                        <th scope="col">#</th>
+                                        <th scope="col">No</th>
                                         <th scope="col">Produk</th>
                                         <th scope="col">Harga Satuan</th>
                                         <th scope="col">Kuantitas</th>

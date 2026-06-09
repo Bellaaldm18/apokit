@@ -17,7 +17,7 @@
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">Rp {{ number_format($sumToday, 0, ',', '.') }}</div>
                                     </div>
                                     <div class="col-auto">
-                                        <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+
                                     </div>
                                 </div>
                             </div>
@@ -34,7 +34,6 @@
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">Rp {{ number_format($sumWeekly, 0, ',', '.') }}</div>
                                     </div>
                                     <div class="col-auto">
-                                        <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
                                     </div>
                                 </div>
                             </div>
@@ -51,7 +50,7 @@
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">Rp {{ number_format($sumMonthly, 0, ',', '.') }}</div>
                                     </div>
                                     <div class="col-auto">
-                                        <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+
                                     </div>
                                 </div>
                             </div>
@@ -96,7 +95,7 @@
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th class="border-left-danger text-center align-middle">Nama Obat</th>
+                                        <th class="border-left-danger text-center ">Nama Obat</th>
                                         <th class="text-center align-middle">Tanggal Kadaluarsa</th>
                                         <th class="text-center align-middle">Stok</th>
                                     </tr>

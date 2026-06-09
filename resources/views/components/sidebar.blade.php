@@ -53,7 +53,7 @@
             <span>Laporan Obat</span>
         </a>
         <a class="nav-link collapsed" href="{{ url('dashboard/laporan-keuangan') }}">
-            <i class="fa-solid fa-file-invoice-dollar"></i>
+            <i class="fa-solid fa-clipboard"></i>
             <span>Laporan Keuangan</span>
         </a>
     </li>
@@ -64,9 +64,6 @@
     <hr class="sidebar-divider d-none d-md-block">
 
     <!-- Sidebar Toggler (Sidebar) -->
-    <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
-    </div>
 
 </ul>
 <!-- End of Sidebar -->
