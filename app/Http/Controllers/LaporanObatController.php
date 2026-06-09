@@ -72,7 +72,7 @@ class LaporanObatController extends Controller
         ->whereDate('detail_transaksis.created_at', '>=', now()->subDays(30))
         ->groupBy('manajemen_obats.nama')
         ->orderBy('total', 'desc')
-        ->limit(10)
+        ->limit(20)
         ->get();
 
     return response()->json($data);

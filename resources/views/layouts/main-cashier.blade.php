@@ -36,6 +36,9 @@
 
     <!-- Topbar Navbar -->
     <nav class="navbar navbar-expand navbar-light bg-success topbar mb-4 static-top shadow-sm">
+        <span class="navbar-brand text-white font-weight-bold ml-3">
+            <i class="fas fa-hospital mr-1"></i> Paledang Farma
+        </span>
         <ul class="navbar-nav ml-auto">
             <li class="nav-item font-weight-bold">
                 <a href="{{ url('pesanan') }}" class="nav-link text-white">Pesanan</a>
@@ -43,33 +46,19 @@
             <li class="nav-item font-weight-bold">
                 <a href="{{ url('riwayat') }}" class="nav-link text-white">Riwayat</a>
             </li>
+            <li class="nav-item d-none d-sm-flex align-items-center mx-3">
+                <span class="badge badge-light px-2 py-1 mr-2" style="color:#28a745; font-size:0.75rem;">KASIR</span>
+                <span class="text-white font-weight-bold">{{ auth()->user()->nama ?? auth()->user()->username ?? 'Kasir' }}</span>
+            </li>
             <li class="nav-item font-weight-bold">
                 <div class="nav-link">
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf
-                    <button class="text-white bg-transparent border-0 fw-bold">Logout</button>
-                </form>
-                </div>
-            </li>
-            <li class="nav-item dropdown no-arrow">
-                {{-- <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="mr-2 d-none d-lg-inline text-white">Douglas McGee</span>
-                </a>
-                <!-- Dropdown - User Information -->
-                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                    <a class="dropdown-item" href="#">
-                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                        Profile
-                    </a>
-                    <form action="{{ route('logout') }}" method="POST">
-                        @csrf
-                        <button class="dropdown-item">
-                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                            Logout
+                        <button class="text-white bg-transparent border-0 fw-bold">
+                            <i class="fas fa-sign-out-alt mr-1"></i> Logout
                         </button>
                     </form>
-                </div> --}}
+                </div>
             </li>
         </ul>
     </nav>

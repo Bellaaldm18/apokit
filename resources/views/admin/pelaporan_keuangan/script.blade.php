@@ -36,6 +36,16 @@
                 }
             },
             {
+                data: 'metode_pembayaran',
+                name: 'metode_pembayaran',
+                className: 'text-center',
+                render: function(data) {
+                    if (data === 'qris') return '<span class="badge badge-warning">QRIS</span>';
+                    if (data === 'transfer') return '<span class="badge badge-primary">Transfer</span>';
+                    return '<span class="badge badge-success">Cash</span>';
+                }
+            },
+            {
                 data: 'total_pembayaran',
                 name: 'total_transaksi',
                 className: 'text-center',
@@ -75,12 +85,6 @@
     var bulanSekarang = new Date().getMonth() + 1;
     bulanSekarang = bulanSekarang.toString().padStart(2, '0');
 
-    dropdownBulan.val(bulanSekarang).trigger('change');
-
-
-    // ==============================
-    // TAMBAHAN: LOAD TOTAL PENDAPATAN
-    // ==============================
     function loadTotalPendapatan(bulan) {
         $.ajax({
             url: "{{ url('dashboard/total-pendapatan-bulan') }}",
@@ -88,20 +92,19 @@
             data: { bulan: bulan },
             success: function(res) {
                 $('#total-pendapatan').text(formatRupiah(res.total));
+                $('#total-cash').text(formatRupiah(res.cash));
+                $('#total-qris').text(formatRupiah(res.qris));
+                $('#total-transfer').text(formatRupiah(res.transfer));
             }
         });
     }
 
-
     dropdownBulan.on('change', function() {
-        console.log(dropdownBulan.val())
         table.ajax.reload()
-
-        // ==============================
-        // TAMBAHAN: UPDATE TOTAL
-        // ==============================
         loadTotalPendapatan(dropdownBulan.val());
     })
+
+    dropdownBulan.val(bulanSekarang).trigger('change');
 
 
     function formatDateToIndonesian(dateStr) {

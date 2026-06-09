@@ -1,31 +1,40 @@
 <script>
     var table = $('#tabel-obat').DataTable({
         scrollX: true,
-        ordering: false,
+        order: [],
         "language": {
             "url": "https://cdn.datatables.net/plug-ins/1.10.24/i18n/Indonesian.json"
         },
         processing: false,
         serverSide: false,
         ajax: "{{ url('dashboard/load-data-obat') }}",
-        columns: [{
+        columns: [
+        {
             data: null,
             name: 'Nomor',
             className: 'text-center align-center',
             render: function (data, type, row, meta) {
-                // Menggunakan data.id untuk nomor increment
                 return meta.row + 1;
             }
         },
         {
             data: 'nama',
             name: 'Nama',
-            style: 'text-align: center'
+        },
+        {
+            data: 'is_obat_keras',
+            name: 'Jenis',
+            className: 'text-center',
+            render: function(data) {
+                if (data == 1) {
+                    return '<span class="badge badge-danger">Obat Keras</span>';
+                }
+                return '<span class="badge badge-success">Obat Bebas</span>';
+            }
         },
         {
             data: 'no_batch',
             name: 'Nomor Batch',
-            style: 'text-align: center'
         },
         {
             data: 'tgl_kadaluarsa',
@@ -33,19 +42,45 @@
         },
         {
             data: 'stok',
-            name: 'Kuantitas'
+            name: 'Stok',
+            className: 'text-center',
+            render: function(data) {
+                if (data <= 5) {
+                    return '<span class="badge badge-danger">' + data + '</span>';
+                } else if (data <= 20) {
+                    return '<span class="badge badge-warning">' + data + '</span>';
+                }
+                return '<span class="badge badge-success">' + data + '</span>';
+            }
         },
         {
             data: 'harga_beli',
-            name: 'Harga Beli'
+            name: 'Harga Beli',
+            render: function(data) {
+                return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(data);
+            }
         },
         {
             data: 'harga_jual',
-            name: 'Harga Jual'
+            name: 'Harga Jual',
+            render: function(data) {
+                return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(data);
+            }
+        },
+        {
+            data: 'komposisi',
+            name: 'Komposisi',
+            render: function(data) {
+                if (!data) return '-';
+                return data.length > 40 ? '<span title="' + data + '">' + data.substring(0, 40) + '...</span>' : data;
+            }
         },
         {
             data: 'catatan',
-            name: 'Keterangan'
+            name: 'Keterangan',
+            render: function(data) {
+                return data || '-';
+            }
         },
         {
             data: 'aksi',
@@ -71,11 +106,12 @@
             e.preventDefault();
             var id = $(this).data('id');
             swalInit.fire({
-                text: 'Apakah data ini akan dihapus?',
-                icon: 'question',
+                title: 'Yakin data akan dihapus?',
+                text: 'Data yang dihapus tidak dapat dikembalikan!',
+                icon: 'warning',
                 showCancelButton: true,
                 cancelButtonText: 'Batal',
-                confirmButtonText: 'Hapus',
+                confirmButtonText: 'Ya, Hapus!',
             }).then((result) => {
                 if(result.isConfirmed) {
                     $.ajax({

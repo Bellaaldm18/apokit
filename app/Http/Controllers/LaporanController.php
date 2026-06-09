@@ -97,8 +97,23 @@ class LaporanController extends Controller
         $total = Transaksi::whereMonth('tgl_transaksi', $bulan)
             ->sum('total_pembayaran');
 
+        $totalCash = Transaksi::whereMonth('tgl_transaksi', $bulan)
+            ->where('metode_pembayaran', 'cash')
+            ->sum('total_pembayaran');
+
+        $totalQris = Transaksi::whereMonth('tgl_transaksi', $bulan)
+            ->where('metode_pembayaran', 'qris')
+            ->sum('total_pembayaran');
+
+        $totalTransfer = Transaksi::whereMonth('tgl_transaksi', $bulan)
+            ->where('metode_pembayaran', 'transfer')
+            ->sum('total_pembayaran');
+
         return response()->json([
-            'total' => $total
+            'total' => $total,
+            'cash' => $totalCash,
+            'qris' => $totalQris,
+            'transfer' => $totalTransfer
         ]);
     }
 }

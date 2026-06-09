@@ -5,12 +5,17 @@
 
 @section('content')
 <div class="container">
-{{--  <div class="container bg-white mx-3 mb-4 p-4 rounded card shadow">  --}}
     <div class="mx-3 card shadow mb-4">
         <div class="card-body">
-        <div style="height: 300px;" class="d-flex justify-content-center">
-            <canvas id="chartObatTerlaris"></canvas>
-        </div>
+            <h5 class="fw-bolder mb-3">Grafik Obat Terlaris (30 Hari Terakhir)</h5>
+            <div class="d-flex mb-2">
+                <span class="badge mr-2" style="background:#e74a3b; padding:6px 12px;">&#9632; Top 10 (Merah)</span>
+                <span class="badge" style="background:#f6c23e; padding:6px 12px;">&#9632; Rank 11–20 (Kuning)</span>
+            </div>
+            <div style="height: 350px;" class="d-flex justify-content-center">
+                <canvas id="chartObatTerlaris"></canvas>
+            </div>
+            <div class="mt-3" id="legend-obat-terlaris"></div>
         </div>
     </div>
 
@@ -37,7 +42,6 @@
                     </thead>
                 </table>
             </div>
-
         </div>
     </div>
 
@@ -65,7 +69,6 @@
                     </thead>
                 </table>
             </div>
-
         </div>
     </div>
 </div>

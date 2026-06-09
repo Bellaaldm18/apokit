@@ -8,6 +8,7 @@ use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\LaporanObatController;
 use App\Http\Controllers\ManajemenObatController;
+use App\Http\Controllers\MonitoringController;
 use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RiwayatController;
@@ -84,6 +85,12 @@ Route::middleware(['auth','admin'])->group(function() {
             Route::get('grafik-obat-terlaris', 'grafikObatTerlaris');
             Route::get('export-laporan-obat-kadaluarsa', 'exportExpired');
             Route::get('export-laporan-obat-terlaris', 'exportBestSelling');
+        });
+
+        Route::controller(MonitoringController::class)->group(function() {
+            Route::get('monitoring', 'index');
+            Route::get('monitoring-stok-rendah', 'stokRendah');
+            Route::get('monitoring-kadaluarsa', 'kadaluarsaMendekati');
         });
 
         // M

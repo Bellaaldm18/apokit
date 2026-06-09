@@ -21,7 +21,7 @@ class ManajemenObatController extends Controller
     }
 
     public function viewDatas() {
-        $data = ManajemenObat::get();
+        $data = ManajemenObat::latest()->get();
         return DataTables::of($data)
             ->addColumn('aksi', function($data) {
                 return view('admin.obat.tombol')->with('data', $data);
@@ -83,7 +83,9 @@ class ManajemenObatController extends Controller
                 'tgl_penerimaan' => $request->tgl_penerimaan,
                 'harga_beli' => $request->harga_beli,
                 'harga_jual' => $request->harga_jual,
-                'catatan' => $request->catatan
+                'catatan' => $request->catatan,
+                'is_obat_keras' => $request->is_obat_keras == '1' ? 1 : 0,
+                'komposisi' => $request->komposisi
             ];
 
             $manajemen_obat = ManajemenObat::updateOrCreate(['id'=>$id], $data);
