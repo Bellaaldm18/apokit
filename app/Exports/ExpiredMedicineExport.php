@@ -5,7 +5,7 @@ namespace App\Exports;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-use function PHPSTORM_META\map;
+use Carbon\Carbon;
 
 class ExpiredMedicineExport implements FromCollection, WithHeadings
 {
@@ -22,12 +22,25 @@ class ExpiredMedicineExport implements FromCollection, WithHeadings
     public function collection()
     {
         return collect($this->obat)->map(function($obat, $index) {
+            $today = Carbon::today();
+            $exp   = Carbon::parse($obat['tgl_kadaluarsa']);
+            $diff  = $today->diffInDays($exp, false);
+
+            if ($diff < 0) {
+                $sisaHari = 'Sudah Kadaluarsa';
+            } elseif ($diff === 0) {
+                $sisaHari = 'Hari Ini';
+            } else {
+                $sisaHari = $diff . ' Hari Lagi';
+            }
+
             return [
-                '#' => $index+1,
-                'Nama Obat' => $obat['nama'],
-                'Nomor Batch' => $obat['no_batch'],
+                '#'                  => $index + 1,
+                'Nama Obat'          => $obat['nama'],
+                'Nomor Batch'        => $obat['no_batch'],
                 'Tanggal Kadaluarsa' => $obat['tgl_kadaluarsa'],
-                'Stok' => $obat['stok']
+                'Sisa Hari'          => $sisaHari,
+                'Stok'               => $obat['stok'],
             ];
         });
     }
@@ -39,7 +52,8 @@ class ExpiredMedicineExport implements FromCollection, WithHeadings
             'Nama Obat',
             'Nomor Batch',
             'Tanggal Kadaluarsa',
-            'Stok'
+            'Sisa Hari',
+            'Stok',
         ];
     }
 }

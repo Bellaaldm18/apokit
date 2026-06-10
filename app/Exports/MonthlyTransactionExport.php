@@ -21,10 +21,11 @@ class MonthlyTransactionExport implements FromCollection, WithHeadings
     {
         return collect($this->transaksi)->map(function($transaksi, $index) {
             return [
-                '#' => $index+1,
-                'Nomor Transaksi' => $transaksi['no_transaksi'],
+                '#'                 => $index + 1,
+                'Nomor Transaksi'   => $transaksi['no_transaksi'],
                 'Tanggal Transaksi' => $transaksi['tgl_transaksi'],
-                'Total Transaksi' => $transaksi['total_pembayaran']
+                'Total Transaksi'   => $transaksi['total_pembayaran'],
+                'Metode Pembayaran' => strtoupper($transaksi['metode_pembayaran'] ?? '-'),
             ];
         });
     }
@@ -35,7 +36,8 @@ class MonthlyTransactionExport implements FromCollection, WithHeadings
             '#',
             'Nomor Transaksi',
             'Tanggal Transaksi',
-            'Total Transaksi'
+            'Total Transaksi',
+            'Metode Pembayaran',
         ];
     }
 }
