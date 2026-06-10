@@ -17,6 +17,16 @@
                             <td class="px-2">:</td>
                             <td>{{ $data->tgl_transaksi }}</td>
                         </tr>
+                        <tr>
+                            <td>Kasir</td>
+                            <td class="px-2">:</td>
+                            <td><strong>{{ $data->kasir->nama ?? '-' }}</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Metode Pembayaran</td>
+                            <td class="px-2">:</td>
+                            <td>{{ strtoupper($data->metode_pembayaran ?? '-') }}</td>
+                        </tr>
                     </table>
                 </div>
             </div>
