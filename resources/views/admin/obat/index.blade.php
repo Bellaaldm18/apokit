@@ -4,7 +4,7 @@
 @endsection
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
     <div class="mx-3 card shadow mb-4">
         <div class="card-body">
             <a href="{{ route('manajemen-obat.form') }}" type="button" class="btn btn-success mb-4">Tambah Data</a>

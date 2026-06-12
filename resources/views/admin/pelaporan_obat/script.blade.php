@@ -7,29 +7,33 @@
         processing: false,
         serverSide: false,
         ajax: "{{ url('dashboard/obat-kadaluarsa') }}",
+        drawCallback: function() {
+            var api = this.api();
+            var start = api.page.info().start;
+            api.column(0, { page: 'current' }).nodes().each(function(cell, i) {
+                cell.innerHTML = start + i + 1;
+            });
+        },
         columns: [
             {
                 data: null,
                 name: 'Nomor',
-                className: 'text-center align-center',
-                render: function (data, type, row, meta) {
-                    return meta.row + 1;
-                }
+                className: 'text-center',
             },
             {
                 data: 'nama',
                 name: 'Nama Obat',
-                className: 'text-center'
+                className: 'text-left'
             },
             {
                 data: 'no_batch',
                 name: 'Nomor Batch',
-                className: 'text-center'
+                className: 'text-left'
             },
             {
                 data: 'tgl_kadaluarsa',
                 name: 'Tanggal Kadaluarsa',
-                className: 'text-center',
+                className: 'text-left',
                 render: function(data) {
                     return formatDateToIndonesian(data)
                 }
@@ -74,24 +78,28 @@
         processing: false,
         serverSide: false,
         ajax: "{{ url('dashboard/obat-terlaris') }}",
+        drawCallback: function() {
+            var api = this.api();
+            var start = api.page.info().start;
+            api.column(0, { page: 'current' }).nodes().each(function(cell, i) {
+                cell.innerHTML = start + i + 1;
+            });
+        },
         columns: [
             {
                 data: null,
                 name: 'Nomor',
-                className: 'text-center align-center',
-                render: function (data, type, row, meta) {
-                    return meta.row + 1;
-                }
+                className: 'text-center',
             },
             {
                 data: 'nama_obat',
                 name: 'Nama Obat',
-                className: 'text-center'
+                className: 'text-left'
             },
             {
                 data: 'no_batch',
                 name: 'Nomor Batch',
-                className: 'text-center'
+                className: 'text-left'
             },
             {
                 data: 'total_penjualan',

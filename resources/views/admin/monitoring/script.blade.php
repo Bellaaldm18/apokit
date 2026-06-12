@@ -23,10 +23,17 @@
         serverSide: false,
         ajax: "{{ url('dashboard/monitoring-stok-rendah') }}",
         order: [[3, 'asc']],
+        drawCallback: function() {
+            var api = this.api();
+            var start = api.page.info().start;
+            api.column(0, { page: 'current' }).nodes().each(function(cell, i) {
+                cell.innerHTML = start + i + 1;
+            });
+        },
         columns: [
-            { data: null, className: 'text-center', render: function(d,t,r,m){ return m.row+1; } },
-            { data: 'nama', className: 'text-center' },
-            { data: 'no_batch', className: 'text-center' },
+            { data: null, className: 'text-center' },
+            { data: 'nama', className: 'text-left' },
+            { data: 'no_batch', className: 'text-left' },
             {
                 data: 'stok',
                 className: 'text-center',
@@ -37,12 +44,12 @@
             },
             {
                 data: 'tgl_kadaluarsa',
-                className: 'text-center',
+                className: 'text-left',
                 render: function(data) { return formatDateToIndonesian(data); }
             },
             {
                 data: 'harga_jual',
-                className: 'text-center',
+                className: 'text-right',
                 render: function(data) { return formatRupiah(data); }
             },
         ]
@@ -55,10 +62,17 @@
         serverSide: false,
         ajax: "{{ url('dashboard/monitoring-kadaluarsa') }}",
         order: [[4, 'asc']],
+        drawCallback: function() {
+            var api = this.api();
+            var start = api.page.info().start;
+            api.column(0, { page: 'current' }).nodes().each(function(cell, i) {
+                cell.innerHTML = start + i + 1;
+            });
+        },
         columns: [
-            { data: null, className: 'text-center', render: function(d,t,r,m){ return m.row+1; } },
-            { data: 'nama', className: 'text-center' },
-            { data: 'no_batch', className: 'text-center' },
+            { data: null, className: 'text-center' },
+            { data: 'nama', className: 'text-left' },
+            { data: 'no_batch', className: 'text-left' },
             {
                 data: 'stok',
                 className: 'text-center',
@@ -69,7 +83,7 @@
             },
             {
                 data: 'tgl_kadaluarsa',
-                className: 'text-center',
+                className: 'text-left',
                 render: function(data) { return formatDateToIndonesian(data); }
             },
             {

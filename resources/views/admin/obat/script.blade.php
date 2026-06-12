@@ -20,6 +20,7 @@
         {
             data: 'nama',
             name: 'Nama',
+            className: 'text-left',
         },
         {
             data: 'is_obat_keras',
@@ -35,10 +36,12 @@
         {
             data: 'no_batch',
             name: 'Nomor Batch',
+            className: 'text-left',
         },
         {
             data: 'tgl_kadaluarsa',
-            name: 'Tanggal Kadaluarsa'
+            name: 'Tanggal Kadaluarsa',
+            className: 'text-left',
         },
         {
             data: 'stok',
@@ -56,6 +59,7 @@
         {
             data: 'harga_beli',
             name: 'Harga Beli',
+            className: 'text-right',
             render: function(data) {
                 return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(data);
             }
@@ -63,6 +67,7 @@
         {
             data: 'harga_jual',
             name: 'Harga Jual',
+            className: 'text-right',
             render: function(data) {
                 return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(data);
             }
@@ -70,6 +75,7 @@
         {
             data: 'komposisi',
             name: 'Komposisi',
+            className: 'text-left',
             render: function(data) {
                 if (!data) return '-';
                 return data.length > 40 ? '<span title="' + data + '">' + data.substring(0, 40) + '...</span>' : data;
@@ -78,6 +84,7 @@
         {
             data: 'catatan',
             name: 'Keterangan',
+            className: 'text-left',
             render: function(data) {
                 return data || '-';
             }
