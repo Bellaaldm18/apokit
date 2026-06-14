@@ -123,6 +123,31 @@
 });
 
 
+    function updateBayarField(metode) {
+        var totalPembayaran = parseCurrencyString($('.total-pembayaran').text());
+        if (metode === 'qris' || metode === 'transfer') {
+            $('.bayar')
+                .val(formatRupiah(totalPembayaran))
+                .prop('readonly', true)
+                .addClass('bg-light');
+            $('.bayar-hidden').val(Math.floor(totalPembayaran));
+            $('.kembalian-hidden').val(0);
+            $('.kembalian').text(formatRupiah(0));
+        } else {
+            $('.bayar')
+                .val('')
+                .prop('readonly', false)
+                .removeClass('bg-light');
+            $('.bayar-hidden').val(totalPembayaran);
+            $('.kembalian-hidden').val(0);
+            $('.kembalian').text(formatRupiah(0));
+        }
+    }
+
+    $('input[name="metode_ui"]').on('change', function () {
+        updateBayarField($(this).val());
+    });
+
     $(document).ready(function() {
         getKeranjang()
     })

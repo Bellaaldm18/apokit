@@ -42,6 +42,7 @@
         </div>
     </div>
 
+<<<<<<< HEAD
     <div class="mx-3 card shadow mb-4">
         <div class="card-body">
             <div>
@@ -68,6 +69,9 @@
             </div>
         </div>
     </div>
+=======
+
+>>>>>>> c019494fe3cd438d268991126d9f7b2bc0d6f913
 </div>
 @endsection
 @section('script')

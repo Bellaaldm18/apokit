@@ -4,7 +4,7 @@
 @endsection
 
 @section('content')
-    <div class="container bg-white mx-3 p-4 rounded card shadow">
+    <div class="container-fluid bg-white mx-3 p-4 rounded card shadow">
         <form action="{{ route('manajemen-obat.store', ['id' => request('id')]) }}" method="POST">
             @csrf
             <div class="row">

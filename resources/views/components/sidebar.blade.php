@@ -31,10 +31,6 @@
             <i class="fa-solid fa-capsules"></i>
             <span>Manajemen Obat</span>
         </a>
-        <a class="nav-link collapsed" href="{{ url('dashboard/user') }}">
-            <i class="fa-solid fa-user"></i>
-            <span>Manajemen User</span>
-        </a>
     </li>
 
     <!-- Divider -->
@@ -64,6 +60,19 @@
         <a class="nav-link collapsed" href="{{ url('dashboard/laporan-keuangan') }}">
             <i class="fa-solid fa-clipboard"></i>
             <span>Laporan Keuangan</span>
+        </a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">Pengaturan</div>
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ url('dashboard/user') }}">
+            <i class="fa-solid fa-user"></i>
+            <span>Manajemen User</span>
         </a>
     </li>
 

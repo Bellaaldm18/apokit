@@ -1,5 +1,6 @@
 @extends('layouts.main-cashier')
 @section('content')
+<<<<<<< HEAD
     <div class="card o-hidden border-0 shadow-lg mt-3 mb-3" id="area-print">
         <!-- Header Struk -->
 <div class="text-center mb-4">
@@ -15,6 +16,10 @@
     <hr>
 </div>
     <div class="card-body p-1">
+=======
+    <div class="card o-hidden border-0 shadow-lg mt-3 mb-3 mx-auto" style="max-width:720px;" id="area-print">
+        <div class="card-body p-3">
+>>>>>>> c019494fe3cd438d268991126d9f7b2bc0d6f913
             <h4 class="font-weight-bold">Detail Pesanan</h4>
             <hr>
             <div class="row pb-4">
