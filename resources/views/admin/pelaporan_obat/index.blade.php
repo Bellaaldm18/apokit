@@ -21,7 +21,7 @@
             <div>
                 <div class="row">
                     <div class="col-auto">
-                        <h5 class="mb-4 fw-bolder">Barang yang sering keluar</h5>
+                        <h5 class="mb-4 fw-bolder">Obat yang sering keluar</h5>
                     </div>
                     <div class="ml-auto mr-3">
                         <a href="{{ url('dashboard/export-laporan-obat-terlaris') }}" type="button" class="btn btn-success mb-4 export">Export</a>
@@ -47,7 +47,7 @@
             <div>
                 <div class="row">
                     <div class="col-auto">
-                        <h5 class="mb-4 fw-bolder">Barang yang mendekati tanggal kadaluarsa</h5>
+                        <h5 class="mb-4 fw-bolder">Obat kadaluarsa</h5>
                     </div>
                     <div class="ml-auto mr-3">
                         <a href="{{ url('dashboard/export-laporan-obat-kadaluarsa') }}" type="button" class="btn btn-success mb-4 export">Export</a>

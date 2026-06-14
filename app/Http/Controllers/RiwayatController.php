@@ -25,7 +25,7 @@ class RiwayatController extends Controller
 
     public function transactionDetails($id = null)
     {
-        $data = Transaksi::with('detailTransaksis.obat')->where('id',$id)->first();
+        $data = Transaksi::with(['detailTransaksis.obat', 'kasir'])->where('id',$id)->first();
         // return $data;
         return view('cashier.riwayat.detail', compact('data'));
     }

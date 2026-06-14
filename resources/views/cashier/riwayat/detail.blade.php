@@ -1,7 +1,20 @@
 @extends('layouts.main-cashier')
 @section('content')
     <div class="card o-hidden border-0 shadow-lg mt-3 mb-3">
-        <div class="card-body p-5">
+        <!-- Header Struk -->
+<div class="text-center mb-4">
+    <img src="{{ asset('logo-apotek.png') }}"
+         alt="Logo Apotek"
+         width="100">
+
+    <h4 class="mt-2 mb-0 font-weight-bold">APOTEK PALEDANG FARMA</h4>
+    <p class="mb-0">
+        Jl. Paledang No.34, RT.05/RW.07, Bogor Tengah<br>
+        Kota Bogor, Jawa Barat<br>
+    </p>
+    <hr>
+</div>
+    <div class="card-body p-1">
             <h4 class="font-weight-bold">Detail Pesanan</h4>
             <hr>
             <div class="row pb-4">
@@ -16,6 +29,16 @@
                             <td>Tanggal Pesanan</td>
                             <td class="px-2">:</td>
                             <td>{{ $data->tgl_transaksi }}</td>
+                        </tr>
+                        <tr>
+                            <td>Kasir</td>
+                            <td class="px-2">:</td>
+                            <td><strong>{{ $data->kasir->nama ?? '-' }}</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Metode Pembayaran</td>
+                            <td class="px-2">:</td>
+                            <td>{{ strtoupper($data->metode_pembayaran ?? '-') }}</td>
                         </tr>
                     </table>
                 </div>
