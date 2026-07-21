@@ -13,7 +13,7 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
+    <li class="nav-item {{ request()->is('dashboard') ? 'active' : '' }}">
         <a class="nav-link" href="{{ url('/dashboard') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span>
@@ -26,7 +26,7 @@
     <!-- Heading -->
     <div class="sidebar-heading">Data Master</div>
 
-    <li class="nav-item">
+    <li class="nav-item {{ request()->is('dashboard/manajemen-obat*') ? 'active' : '' }}">
         <a class="nav-link collapsed" href="{{ url('dashboard/manajemen-obat') }}">
             <i class="fa-solid fa-capsules"></i>
             <span>Manajemen Obat</span>
@@ -39,7 +39,7 @@
     <!-- Heading -->
     <div class="sidebar-heading">Monitoring</div>
 
-    <li class="nav-item">
+    <li class="nav-item {{ request()->is('dashboard/monitoring*') ? 'active' : '' }}">
         <a class="nav-link collapsed" href="{{ url('dashboard/monitoring') }}">
             <i class="fa-solid fa-chart-line"></i>
             <span>Stok & Kadaluarsa</span>
@@ -52,11 +52,13 @@
     <!-- Heading -->
     <div class="sidebar-heading">Pelaporan</div>
 
-    <li class="nav-item">
+    <li class="nav-item {{ request()->is('dashboard/laporan-obat*') ? 'active' : '' }}">
         <a class="nav-link collapsed" href="{{ url('dashboard/laporan-obat') }}">
             <i class="fa-solid fa-clipboard"></i>
             <span>Laporan Obat</span>
         </a>
+    </li>
+    <li class="nav-item {{ request()->is('dashboard/laporan-keuangan*') ? 'active' : '' }}">
         <a class="nav-link collapsed" href="{{ url('dashboard/laporan-keuangan') }}">
             <i class="fa-solid fa-clipboard"></i>
             <span>Laporan Keuangan</span>
@@ -69,7 +71,7 @@
     <!-- Heading -->
     <div class="sidebar-heading">Pengaturan</div>
 
-    <li class="nav-item">
+    <li class="nav-item {{ request()->is('dashboard/user*') ? 'active' : '' }}">
         <a class="nav-link collapsed" href="{{ url('dashboard/user') }}">
             <i class="fa-solid fa-user"></i>
             <span>Manajemen User</span>
