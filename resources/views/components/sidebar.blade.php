@@ -39,10 +39,16 @@
     <!-- Heading -->
     <div class="sidebar-heading">Monitoring</div>
 
-    <li class="nav-item {{ request()->is('dashboard/monitoring*') ? 'active' : '' }}">
-        <a class="nav-link collapsed" href="{{ url('dashboard/monitoring') }}">
-            <i class="fa-solid fa-chart-line"></i>
-            <span>Stok & Kadaluarsa</span>
+    <li class="nav-item {{ request()->is('dashboard/monitoring-stok') ? 'active' : '' }}">
+        <a class="nav-link collapsed" href="{{ url('dashboard/monitoring-stok') }}">
+            <i class="fa-solid fa-boxes-stacked"></i>
+            <span>Stok Obat</span>
+        </a>
+    </li>
+    <li class="nav-item {{ request()->is('dashboard/monitoring-kadaluarsa-page') ? 'active' : '' }}">
+        <a class="nav-link collapsed" href="{{ url('dashboard/monitoring-kadaluarsa-page') }}">
+            <i class="fa-solid fa-clock"></i>
+            <span>Kadaluarsa</span>
         </a>
     </li>
 
@@ -62,6 +68,12 @@
         <a class="nav-link collapsed" href="{{ url('dashboard/laporan-keuangan') }}">
             <i class="fa-solid fa-clipboard"></i>
             <span>Laporan Keuangan</span>
+        </a>
+    </li>
+    <li class="nav-item {{ request()->is('dashboard/biaya-operasional*') ? 'active' : '' }}">
+        <a class="nav-link collapsed" href="{{ url('dashboard/biaya-operasional') }}">
+            <i class="fa-solid fa-money-bill-wave"></i>
+            <span>Biaya Operasional</span>
         </a>
     </li>
 

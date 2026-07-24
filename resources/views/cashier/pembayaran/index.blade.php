@@ -1,25 +1,20 @@
 @extends('layouts.main-cashier')
 @section('content')
-<<<<<<< HEAD
-    <div class="card o-hidden border-0 shadow-lg mt-3 mb-3" id="area-print">
-        <!-- Header Struk -->
-<div class="text-center mb-4">
-    <img src="{{ asset('logo-apotek.png') }}"
-         alt="Logo Apotek"
-         width="100">
-
-    <h4 class="mt-2 mb-0 font-weight-bold">APOTEK PALEDANG FARMA</h4>
-    <p class="mb-0">
-        Jl. Paledang No.34, RT.05/RW.07, Bogor Tengah<br>
-        Kota Bogor, Jawa Barat<br>
-    </p>
-    <hr>
-</div>
-    <div class="card-body p-1">
-=======
     <div class="card o-hidden border-0 shadow-lg mt-3 mb-3 mx-auto" style="max-width:720px;" id="area-print">
-        <div class="card-body p-3">
->>>>>>> c019494fe3cd438d268991126d9f7b2bc0d6f913
+        <!-- Header Struk -->
+        <div class="text-center mb-4">
+            <img src="{{ asset('logo-apotek.png') }}"
+                 alt="Logo Apotek"
+                 width="100">
+
+            <h4 class="mt-2 mb-0 font-weight-bold">APOTEK PALEDANG FARMA</h4>
+            <p class="mb-0">
+                Jl. Paledang No.34, RT.05/RW.07, Bogor Tengah<br>
+                Kota Bogor, Jawa Barat<br>
+            </p>
+            <hr>
+        </div>
+        <div class="card-body p-4">
             <h4 class="font-weight-bold">Detail Pesanan</h4>
             <hr>
             <div class="row pb-4">
@@ -148,15 +143,14 @@
             <hr>
             <div class="row no-print">
                 <div class="col">
-                    <form method="POST" action="{{ url('pembayaran') }}">
+                    <form method="POST" action="{{ url('pembayaran') }}" id="form-pembayaran">
                         @csrf
                         <input type="hidden" name="no_pesanan" value="{{ $no_pesanan }}">
                         <input type="hidden" class="form-control form-control-sm w-75 m-0 bayar-hidden" name="bayar">
                         <input type="hidden" class="form-control form-control-sm kembalian-hidden" name="kembalian">
                         <input type="hidden" id="metode-hidden" name="metode_pembayaran" value="cash">
                         <div class="d-flex flex-row-reverse">
-                            <a href="" class="btn btn-success ml-2" onclick="printReceipt()">Cetak Struk</a>
-                            <button type="submit" class="btn btn-primary btn-bayar">Langsung Simpan</button>
+                            <button type="button" class="btn btn-success" id="btn-cetak-simpan" onclick="cetakDanSimpan()">Cetak Struk</button>
                         </div>
                     </form>
                 </div>
@@ -184,19 +178,39 @@
             $('#metode-label').text(labels[val] || 'Cash');
         });
 
-        function printReceipt() {
-            var bayarVal = $('.bayar').val();
-            $('.bayar-print').text(bayarVal);
+        function cetakDanSimpan() {
+            var btn = $('#btn-cetak-simpan');
+            if (btn.prop('disabled')) return;
 
-            var printButton = document.querySelector('.btn-success');
-            var saveButton = document.querySelector('.btn-primary');
-            if (printButton) printButton.style.display = 'none';
-            if (saveButton) saveButton.style.display = 'none';
+            var bayarHidden = parseFloat($('.bayar-hidden').val());
+            if (!bayarHidden || bayarHidden <= 0) {
+                alert('Isi jumlah bayar terlebih dahulu.');
+                return;
+            }
 
-            window.print();
+            btn.prop('disabled', true).text('Menyimpan...');
 
-            if (printButton) printButton.style.display = '';
-            if (saveButton) saveButton.style.display = '';
+            $.ajax({
+                type: 'POST',
+                url: $('#form-pembayaran').attr('action'),
+                data: $('#form-pembayaran').serialize(),
+                dataType: 'json',
+                success: function(response) {
+                    $('.bayar-print').text($('.bayar').val());
+
+                    window.onafterprint = function() {
+                        window.location.href = response.redirect;
+                    };
+                    window.print();
+                },
+                error: function(xhr) {
+                    btn.prop('disabled', false).text('Cetak Struk');
+                    var message = xhr.responseJSON && xhr.responseJSON.message
+                        ? xhr.responseJSON.message
+                        : 'Terjadi kesalahan saat menyimpan transaksi.';
+                    alert(message);
+                }
+            });
         }
     </script>
 @endsection

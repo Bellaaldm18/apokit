@@ -1,5 +1,9 @@
 @extends('layouts.main')
 
+@section('contentTitle')
+    Dashboard
+@endsection
+
 @section('content')
     <div class="container">
         {{--  <div class="container bg-white mx-3 mb-4 p-4 rounded card shadow">  --}}
@@ -17,7 +21,7 @@
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">Rp {{ number_format($sumToday, 0, ',', '.') }}</div>
                                     </div>
                                     <div class="col-auto">
-
+                                        <i class="fas fa-calendar-day fa-2x text-gray-300"></i>
                                     </div>
                                 </div>
                             </div>
@@ -34,6 +38,7 @@
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">Rp {{ number_format($sumWeekly, 0, ',', '.') }}</div>
                                     </div>
                                     <div class="col-auto">
+                                        <i class="fas fa-calendar-week fa-2x text-gray-300"></i>
                                     </div>
                                 </div>
                             </div>
@@ -50,7 +55,7 @@
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">Rp {{ number_format($sumMonthly, 0, ',', '.') }}</div>
                                     </div>
                                     <div class="col-auto">
-
+                                        <i class="fas fa-calendar-alt fa-2x text-gray-300"></i>
                                     </div>
                                 </div>
                             </div>

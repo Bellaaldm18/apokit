@@ -85,11 +85,20 @@ class PembayaranController extends Controller
 
         DB::commit();
         session()->forget('keranjangBelanja');
+
+        if ($request->wantsJson()) {
+            return response()->json(['success' => true, 'redirect' => url('pesanan')]);
+        }
+
         return redirect()->to('pesanan');
 
     } catch (\Exception $e) {
         DB::rollBack();
-        dd($e->getMessage());
+
+        if ($request->wantsJson()) {
+            return response()->json(['success' => false, 'message' => 'Terjadi kesalahan saat menyimpan transaksi: ' . $e->getMessage()], 500);
+        }
+
         return redirect()->back()->with('error', 'Terjadi kesalahan saat menyimpan transaksi: ' . $e->getMessage());
     }
 }

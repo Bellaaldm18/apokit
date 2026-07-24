@@ -4,15 +4,16 @@
 @endsection
 
 @section('content')
-<div class="container-fluid">
+<div class="container">
     <div class="mx-3 card shadow mb-4">
         <div class="card-body">
+            @include('components.alert')
             <a href="{{ route('manajemen-obat.form') }}" type="button" class="btn btn-success mb-4">Tambah Data</a>
             <div class="table-responsive">
                 <table class="table" id="tabel-obat" width="100%" cellspacing="0">
                     <thead class="text-center">
                         <tr>
-                            <th class>No</th>
+                            <th class="align-middle">No</th>
                             <th class="align-middle">Nama Obat</th>
                             <th class="align-middle">Jenis</th>
                             <th class="align-middle">Nomor Batch</th>

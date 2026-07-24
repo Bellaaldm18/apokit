@@ -5,9 +5,9 @@
 
 @section('content')
 <div class="container">
-{{--  <div class="container bg-white mx-3 mb-4 p-4 rounded card shadow">  --}}
     <div class="mx-3 card shadow mb-4">
         <div class="card-body">
+            @include('components.alert')
             <a href="{{ route('user.form') }}" type="button" class="btn btn-success mb-4">Tambah Data</a>
             <div class="table-responsive">
                 <table class="table" id="tabel-user" width="100%" cellspacing="0">

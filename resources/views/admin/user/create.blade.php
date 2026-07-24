@@ -4,79 +4,69 @@
 @endsection
 
 @section('content')
-    <div class="container bg-white mx-3 p-4 rounded card shadow">
-        <form action="{{ route('user.store', ['id' => request('id')]) }}" method="POST">
+<div class="container">
+    <div class="mx-3 card shadow mb-4">
+        <div class="card-body">
+        <form action="{{ route('user.store', ['id' => $data->id ?? null]) }}" method="POST">
             @csrf
             <div class="row">
                 <div class="col">
                     <div class="mb-3">
-                        <label for="exampleFormControlInput1">Role</label>
-                        <select name="role" id="role" class="form-control custom-select" data-placeholder="Pilih Role">
-                            <option value=""selected></option>
-                            <option value="admin" {{ ($data->role ?? null) == null ?  null : (($data && $data->role == 'admin') ? 'selected' : '') }}>Admin</option>
-                            <option value="kasir" {{ ($data->role ?? null) == null ?  null : (($data && $data->role == 'kasir') ? 'selected' : '') }}>Kasir</option>
+                        <label for="role">Role</label>
+                        <select name="role" id="role" class="form-control custom-select @error('role') is-invalid @enderror" data-placeholder="Pilih Role">
+                            <option value="" selected></option>
+                            <option value="admin" {{ old('role', $data->role ?? null) == 'admin' ? 'selected' : '' }}>Admin</option>
+                            <option value="kasir" {{ old('role', $data->role ?? null) == 'kasir' ? 'selected' : '' }}>Kasir</option>
                         </select>
+                        @error('role') <div class="invalid-feedback">{{ $message }}</div> @enderror
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-6">
                     <div class="mb-3">
-                        <label for="exampleFormControlInput1">Nama Lengkap</label>
-                        <input class="form-control" name="nama" id="exampleFormControlInput1" type="text" placeholder="" value="{{ $data->nama ?? null }}">
+                        <label for="nama">Nama Lengkap</label>
+                        <input class="form-control @error('nama') is-invalid @enderror" name="nama" id="nama" type="text" placeholder="" value="{{ old('nama', $data->nama ?? null) }}">
+                        @error('nama') <div class="invalid-feedback">{{ $message }}</div> @enderror
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="mb-3">
-                        <label for="exampleFormControlInput1">Nomor Telepon</label>
-                        <input class="form-control" name="no_tlpn" id="exampleFormControlInput1" type="text" placeholder="" value="{{ $data->no_tlpn ?? null }}">
+                        <label for="no_tlpn">Nomor Telepon</label>
+                        <input class="form-control" name="no_tlpn" id="no_tlpn" type="text" placeholder="" value="{{ old('no_tlpn', $data->no_tlpn ?? null) }}">
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-4">
                     <div class="mb-3">
-                        <label for="exampleFormControlInput1">Email</label>
-                        <input class="form-control" name="email" id="exampleFormControlInput1" type="email" placeholder="" value="{{ $data->email ?? null }}">
+                        <label for="email">Email</label>
+                        <input class="form-control" name="email" id="email" type="email" placeholder="" value="{{ old('email', $data->email ?? null) }}">
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="mb-3">
-                        <label for="exampleFormControlInput1">Username</label>
-                        <input class="form-control" name="username" id="exampleFormControlInput1" type="text" placeholder="" value="{{ $data->username ?? null }}">
+                        <label for="username">Username</label>
+                        <input class="form-control @error('username') is-invalid @enderror" name="username" id="username" type="text" placeholder="" value="{{ old('username', $data->username ?? null) }}">
+                        @error('username') <div class="invalid-feedback">{{ $message }}</div> @enderror
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="mb-3">
-                        <label for="exampleFormControlInput1">Password</label>
-                        <input class="form-control" name="password" id="exampleFormControlInput1" type="password" placeholder="" value="">
+                        <label for="password">Password</label>
+                        <input class="form-control @error('password') is-invalid @enderror" name="password" id="password" type="password" placeholder="{{ isset($data) ? 'Kosongkan jika tidak ingin ubah password' : '' }}" value="">
+                        @error('password') <div class="invalid-feedback">{{ $message }}</div> @enderror
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-auto">
                     <button type="submit" class="btn btn-success mb-3">Simpan</button>
+                    <a href="{{ url('dashboard/user') }}" class="btn btn-secondary mb-3 ml-2">Batal</a>
                 </div>
             </div>
-            {{--  <div class="mb-3">
-        <label for="exampleFormControlSelect1">Example select</label><select class="form-control" id="exampleFormControlSelect1">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-        </select>
-    </div>
-    <div class="mb-3">
-        <label for="exampleFormControlSelect2">Example multiple select</label><select class="form-control" id="exampleFormControlSelect2" multiple="">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-        </select>
-    </div>  --}}
-
         </form>
+        </div>
     </div>
+</div>
 @endsection

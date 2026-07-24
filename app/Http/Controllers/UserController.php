@@ -48,46 +48,47 @@ class UserController extends Controller
             [
                 'nama' => 'required',
                 'username' => 'required',
-                // 'password' => 'required',
+                'password' => $id ? 'nullable|min:5' : 'required|min:5',
                 'role' => 'required'
             ],
             [
                 'nama' => 'Kolom nama harus diisi',
                 'username' => 'Kolom username harus diisi',
-                // 'password' => 'Kolom password harus diisi',
+                'password.required' => 'Kolom password harus diisi',
+                'password.min' => 'Password minimal 5 karakter',
                 'role' => 'Kolom role harus diisi'
             ]
         );
 
         if($validator->fails()) {
             DB::rollBack();
-            return [
-                'errors' => $validator->errors()
-            ];
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
         try {
             $data = [
                 'nama' => $request->nama,
                 'username' => $request->username,
-                'password' => Hash::make($request->password),
                 'role' => $request->role,
                 'no_tlpn' => $request->no_tlpn,
                 'email' => $request->email,
-                'is_active' => 1
             ];
 
             if(filled($request->password)) {
                 $data['password'] = Hash::make($request->password);
             }
 
+            if(!$id) {
+                $data['is_active'] = 1;
+            }
+
             User::updateOrCreate(['id' => $id], $data);
             DB::commit();
 
-            return view('admin.user.index');
+            return redirect()->route('user.index')->with('success', 'Data user berhasil disimpan');
         } catch(\Exception $e) {
             DB::rollBack();
-            return $e->getMessage();
+            return redirect()->back()->withInput()->with('error', 'Terjadi kesalahan saat menyimpan data: ' . $e->getMessage());
         }
     }
 

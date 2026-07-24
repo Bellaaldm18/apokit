@@ -68,9 +68,7 @@ class ManajemenObatController extends Controller
 
         if($validator->fails()) {
             DB::rollBack();
-            return [
-                'errors' => $validator->errors()
-            ];
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
         try {
@@ -92,10 +90,10 @@ class ManajemenObatController extends Controller
 
             DB::commit();
 
-            return view('admin.obat.index');
+            return redirect()->route('manajemen-obat.index')->with('success', 'Data obat berhasil disimpan');
         } catch(\Exception $e) {
             DB::rollBack();
-            return $e->getMessage();
+            return redirect()->back()->withInput()->with('error', 'Terjadi kesalahan saat menyimpan data: ' . $e->getMessage());
         }
     }
 

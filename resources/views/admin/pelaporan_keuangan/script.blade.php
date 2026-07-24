@@ -99,9 +99,32 @@
         });
     }
 
+    function isiBarisLaba(el, nilai, badgeClass, margin) {
+        el.toggleClass('text-danger', nilai < 0).toggleClass('text-success', nilai >= 0 && badgeClass === 'badge-success');
+        el.html(formatRupiah(nilai) + ' <span class="badge ' + (nilai < 0 ? 'badge-danger' : badgeClass) + '">' + margin + '%</span>');
+    }
+
+    function loadRincianLaba(bulan) {
+        $.ajax({
+            url: "{{ url('dashboard/ringkasan-laba-bulan') }}",
+            type: "GET",
+            data: { bulan: bulan },
+            success: function(res) {
+                $('#rincian-pendapatan').text(formatRupiah(res.pendapatan));
+                $('#rincian-hpp').text('- ' + formatRupiah(res.hpp));
+                isiBarisLaba($('#rincian-laba-kotor'), res.laba_kotor, 'badge-info', res.margin_kotor);
+                $('#rincian-biaya-operasional').text('- ' + formatRupiah(res.biaya_operasional));
+                isiBarisLaba($('#rincian-laba-operasional'), res.laba_operasional, 'badge-info', res.margin_operasional);
+                $('#rincian-biaya-non-operasional').text('- ' + formatRupiah(res.biaya_non_operasional));
+                isiBarisLaba($('#rincian-laba-bersih'), res.laba_bersih, 'badge-success', res.margin_bersih);
+            }
+        });
+    }
+
     dropdownBulan.on('change', function() {
         table.ajax.reload()
         loadTotalPendapatan(dropdownBulan.val());
+        loadRincianLaba(dropdownBulan.val());
     })
 
     dropdownBulan.val(bulanSekarang).trigger('change');

@@ -117,6 +117,32 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+    <script>
+        function formatRibuan(el) {
+            var cursorFromEnd = el.value.length - el.selectionEnd;
+            var angka = el.value.replace(/\D/g, '');
+            el.value = angka ? new Intl.NumberFormat('id-ID').format(angka) : '';
+            var pos = el.value.length - cursorFromEnd;
+            el.setSelectionRange(pos, pos);
+        }
+
+        $(document).ready(function() {
+            $('.input-rupiah').each(function() {
+                if (this.value) formatRibuan(this);
+            });
+
+            $('body').on('input', '.input-rupiah', function() {
+                formatRibuan(this);
+            });
+
+            $('body').on('submit', 'form', function() {
+                $(this).find('.input-rupiah').each(function() {
+                    $(this).val($(this).val().replace(/\D/g, ''));
+                });
+            });
+        });
+    </script>
+
     @yield('script')
 
 </body>

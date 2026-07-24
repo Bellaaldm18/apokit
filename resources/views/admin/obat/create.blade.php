@@ -4,20 +4,24 @@
 @endsection
 
 @section('content')
-    <div class="container-fluid bg-white mx-3 p-4 rounded card shadow">
-        <form action="{{ route('manajemen-obat.store', ['id' => request('id')]) }}" method="POST">
+<div class="container">
+    <div class="mx-3 card shadow mb-4">
+        <div class="card-body">
+        <form action="{{ route('manajemen-obat.store', ['id' => $data->id ?? null]) }}" method="POST">
             @csrf
             <div class="row">
                 <div class="col-6">
                     <div class="mb-3">
                         <label>Nama Obat</label>
-                        <input class="form-control" name="nama" type="text" placeholder="" value="{{ $data->nama ?? null }}">
+                        <input class="form-control @error('nama') is-invalid @enderror" name="nama" type="text" placeholder="" value="{{ old('nama', $data->nama ?? null) }}">
+                        @error('nama') <div class="invalid-feedback">{{ $message }}</div> @enderror
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="mb-3">
                         <label>Nomor Batch</label>
-                        <input class="form-control" name="no_batch" type="text" placeholder="" value="{{ $data->no_batch ?? null }}">
+                        <input class="form-control @error('no_batch') is-invalid @enderror" name="no_batch" type="text" placeholder="" value="{{ old('no_batch', $data->no_batch ?? null) }}">
+                        @error('no_batch') <div class="invalid-feedback">{{ $message }}</div> @enderror
                     </div>
                 </div>
             </div>
@@ -25,13 +29,15 @@
                 <div class="col-6">
                     <div class="mb-3">
                         <label>Tanggal Kadaluarsa</label>
-                        <input class="form-control" name="tgl_kadaluarsa" type="date" value="{{ $data->tgl_kadaluarsa ?? null }}">
+                        <input class="form-control @error('tgl_kadaluarsa') is-invalid @enderror" name="tgl_kadaluarsa" type="date" value="{{ old('tgl_kadaluarsa', $data->tgl_kadaluarsa ?? null) }}">
+                        @error('tgl_kadaluarsa') <div class="invalid-feedback">{{ $message }}</div> @enderror
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="mb-3">
                         <label>Kuantitas</label>
-                        <input class="form-control" name="stok" type="number" placeholder="" value="{{ $data->stok ?? null }}">
+                        <input class="form-control @error('stok') is-invalid @enderror" name="stok" type="number" placeholder="" value="{{ old('stok', $data->stok ?? null) }}">
+                        @error('stok') <div class="invalid-feedback">{{ $message }}</div> @enderror
                     </div>
                 </div>
             </div>
@@ -39,19 +45,22 @@
                 <div class="col-4">
                     <div class="mb-3">
                         <label>Tanggal Penerimaan</label>
-                        <input class="form-control" name="tgl_penerimaan" type="date" value="{{ $data->tgl_penerimaan ?? null }}">
+                        <input class="form-control @error('tgl_penerimaan') is-invalid @enderror" name="tgl_penerimaan" type="date" value="{{ old('tgl_penerimaan', $data->tgl_penerimaan ?? null) }}">
+                        @error('tgl_penerimaan') <div class="invalid-feedback">{{ $message }}</div> @enderror
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="mb-3">
                         <label>Harga Beli</label>
-                        <input class="form-control" name="harga_beli" type="number" placeholder="" value="{{ $data->harga_beli ?? null }}">
+                        <input class="form-control input-rupiah @error('harga_beli') is-invalid @enderror" name="harga_beli" type="text" inputmode="numeric" placeholder="" value="{{ old('harga_beli', isset($data) ? number_format($data->harga_beli, 0, ',', '.') : '') }}">
+                        @error('harga_beli') <div class="invalid-feedback">{{ $message }}</div> @enderror
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="mb-3">
                         <label>Harga Jual</label>
-                        <input class="form-control" name="harga_jual" type="number" placeholder="" value="{{ $data->harga_jual ?? null }}">
+                        <input class="form-control input-rupiah @error('harga_jual') is-invalid @enderror" name="harga_jual" type="text" inputmode="numeric" placeholder="" value="{{ old('harga_jual', isset($data) ? number_format($data->harga_jual, 0, ',', '.') : '') }}">
+                        @error('harga_jual') <div class="invalid-feedback">{{ $message }}</div> @enderror
                     </div>
                 </div>
             </div>
@@ -80,7 +89,7 @@
                 <div class="col-6">
                     <div class="mb-3">
                         <label>Catatan</label>
-                        <textarea class="form-control" name="catatan" rows="2">{{ $data->catatan ?? null }}</textarea>
+                        <textarea class="form-control" name="catatan" rows="2">{{ old('catatan', $data->catatan ?? null) }}</textarea>
                     </div>
                 </div>
             </div>
@@ -88,7 +97,7 @@
                 <div class="col">
                     <div class="mb-3">
                         <label>Komposisi</label>
-                        <textarea class="form-control" name="komposisi" rows="3" placeholder="Contoh: Paracetamol 500mg, Caffeine 50mg">{{ $data->komposisi ?? null }}</textarea>
+                        <textarea class="form-control" name="komposisi" rows="3" placeholder="Contoh: Paracetamol 500mg, Caffeine 50mg">{{ old('komposisi', $data->komposisi ?? null) }}</textarea>
                     </div>
                 </div>
             </div>
@@ -99,5 +108,7 @@
                 </div>
             </div>
         </form>
+        </div>
     </div>
+</div>
 @endsection

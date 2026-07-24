@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Exports\MonthlyTransactionExport;
+use App\Models\BiayaOperasional;
+use App\Models\DetailTransaksi;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -114,6 +116,48 @@ class LaporanController extends Controller
             'cash' => $totalCash,
             'qris' => $totalQris,
             'transfer' => $totalTransfer
+        ]);
+    }
+
+    public function ringkasanLaba(Request $request)
+    {
+        $bulan = $request->bulan;
+
+        $pendapatan = Transaksi::whereMonth('tgl_transaksi', $bulan)->sum('total_pembayaran');
+
+        $hpp = DetailTransaksi::whereHas('transaksi', function ($query) use ($bulan) {
+            $query->whereMonth('tgl_transaksi', $bulan);
+        })->with('obat')->get()->sum(function ($detail) {
+            return ($detail->obat->harga_beli ?? 0) * $detail->kuantitas;
+        });
+
+        $biayaOperasional = BiayaOperasional::whereMonth('tanggal', $bulan)
+            ->where('kategori', 'operasional')
+            ->sum('jumlah');
+
+        $biayaNonOperasional = BiayaOperasional::whereMonth('tanggal', $bulan)
+            ->where('kategori', 'non_operasional')
+            ->sum('jumlah');
+
+        $labaKotor = $pendapatan - $hpp;
+        $labaOperasional = $labaKotor - $biayaOperasional;
+        $labaBersih = $labaOperasional - $biayaNonOperasional;
+
+        $marginKotor = $pendapatan > 0 ? ($labaKotor / $pendapatan) * 100 : 0;
+        $marginOperasional = $pendapatan > 0 ? ($labaOperasional / $pendapatan) * 100 : 0;
+        $marginBersih = $pendapatan > 0 ? ($labaBersih / $pendapatan) * 100 : 0;
+
+        return response()->json([
+            'pendapatan' => $pendapatan,
+            'hpp' => $hpp,
+            'laba_kotor' => $labaKotor,
+            'margin_kotor' => round($marginKotor, 1),
+            'biaya_operasional' => $biayaOperasional,
+            'laba_operasional' => $labaOperasional,
+            'margin_operasional' => round($marginOperasional, 1),
+            'biaya_non_operasional' => $biayaNonOperasional,
+            'laba_bersih' => $labaBersih,
+            'margin_bersih' => round($marginBersih, 1),
         ]);
     }
 }

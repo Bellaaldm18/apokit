@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BiayaOperasionalController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KasirController;
 use App\Http\Controllers\KategoriController;
@@ -76,6 +77,16 @@ Route::middleware(['auth','admin'])->group(function() {
             Route::get('load-laporan-bulan', 'monthlyTransaction');
             Route::get('export-laporan-bulanan', 'exportMonthly');
             Route::get('total-pendapatan-bulan', 'totalPendapatanBulan');
+            Route::get('ringkasan-laba-bulan', 'ringkasanLaba');
+        });
+
+        Route::controller(BiayaOperasionalController::class)->name('biaya')->group(function () {
+            Route::get('load-data-biaya', 'viewDatas');
+            Route::get('biaya-operasional', 'index')->name('.index');
+            Route::post('biaya-operasional/{id?}', 'store')->name('.store');
+            Route::get('biaya-operasional/form', 'create')->name('.form');
+            Route::get('biaya-operasional/edit/{id}', 'edit')->name('.edit');
+            Route::delete('biaya-operasional/{id}', 'destroy')->name('.delete');
         });
 
         Route::controller(LaporanObatController::class)->group(function() {
@@ -88,7 +99,8 @@ Route::middleware(['auth','admin'])->group(function() {
         });
 
         Route::controller(MonitoringController::class)->group(function() {
-            Route::get('monitoring', 'index');
+            Route::get('monitoring-stok', 'stokPage');
+            Route::get('monitoring-kadaluarsa-page', 'kadaluarsaPage');
             Route::get('monitoring-stok-rendah', 'stokRendah');
             Route::get('monitoring-kadaluarsa', 'kadaluarsaMendekati');
         });

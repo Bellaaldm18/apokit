@@ -8,17 +8,21 @@ use Illuminate\Http\Request;
 
 class MonitoringController extends Controller
 {
-    public function index()
+    public function stokPage()
     {
         $totalObat = ManajemenObat::count();
         $obatStokRendah = ManajemenObat::where('stok', '<=', 10)->count();
+
+        return view('admin.monitoring.stok', compact('totalObat', 'obatStokRendah'));
+    }
+
+    public function kadaluarsaPage()
+    {
         $semester = Carbon::now()->addMonths(6);
         $obatMendekatiKadaluarsa = ManajemenObat::where('tgl_kadaluarsa', '<=', $semester)->count();
         $obatKadaluarsa = ManajemenObat::where('tgl_kadaluarsa', '<', now())->count();
 
-        return view('admin.monitoring.index', compact(
-            'totalObat', 'obatStokRendah', 'obatMendekatiKadaluarsa', 'obatKadaluarsa'
-        ));
+        return view('admin.monitoring.kadaluarsa', compact('obatMendekatiKadaluarsa', 'obatKadaluarsa'));
     }
 
     public function stokRendah()

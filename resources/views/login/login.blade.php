@@ -40,12 +40,26 @@
                                         <h1 class="h4 text-gray-900 font-weight-bold">Selamat Datang di SIPENA</h1>
                                         <p class="mb-4 mt-0">Sistem Informasi Penjualan Obat</p>
                                     </div>
+                                    @if (session('loginError'))
+                                        <div class="alert alert-danger">
+                                            Username atau password salah. Silakan coba lagi.
+                                        </div>
+                                    @endif
+                                    @if ($errors->any())
+                                        <div class="alert alert-danger">
+                                            <ul class="mb-0 pl-3">
+                                                @foreach ($errors->all() as $error)
+                                                    <li>{{ $error }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    @endif
                                     <form class="user" method="POST" action="{{ route('login') }}">
                                         @csrf
                                         <div class="form-group">
                                             <input type="text" class="form-control form-control-user" name="username"
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Username">
+                                                placeholder="Username" value="{{ old('username') }}">
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user" name="password"
